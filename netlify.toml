@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22.12.0"
+
+[dev]
+  command = "npm run dev"
+  targetPort = 4321
+  publish = "dist"
+
+[forms]
+  spam_protection = true

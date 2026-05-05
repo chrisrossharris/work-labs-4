@@ -1,11 +1,286 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { contactProfile, foundryHeroBrands, homeFirsts, homePage, homePathways } from '../data/site';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="WORK LABS" description={homePage.metaDescription}>
+	<div class="site-shell">
+		<SiteHeader currentPath="/" ctaHref="/contact" ctaLabel="Request a call" />
+
+		<main>
+			<section class="relative overflow-hidden border-b border-white/[0.08]">
+				<div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(200,165,106,0.18),transparent_32%),radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.06),transparent_24%)]"></div>
+				<div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brass to-transparent"></div>
+				<div class="mx-auto grid max-w-7xl gap-12 px-6 py-18 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)] lg:items-start lg:px-10 lg:py-28">
+					<div class="relative z-10">
+						<div class="text-xs font-semibold uppercase tracking-[0.28em] text-brass">
+							{homePage.heroEyebrow}
+						</div>
+						<h1 class="mt-6 max-w-[13ch] font-serif text-[3.1rem] leading-[0.97] text-paper sm:max-w-[13.5ch] sm:text-[3.45rem] lg:max-w-[14ch] lg:text-[3rem] xl:text-[3.3rem]">
+							{homePage.heroTitle}
+						</h1>
+						<p class="mt-8 max-w-2xl text-lg leading-8 text-paper-dim sm:text-xl">
+							{homePage.heroBody}
+						</p>
+						<div class="mt-8 max-w-xl border-l border-brass pl-5 text-sm uppercase tracking-[0.18em] text-paper-soft">
+							{homePage.heroNote}
+						</div>
+						<div class="mt-10 flex flex-wrap gap-4">
+							<a
+								href="/contact"
+								class="rounded-full bg-brass px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-ink transition hover:bg-sand"
+							>
+								Request a call
+							</a>
+							<a
+								href="/ci2"
+								class="rounded-full border border-white/[0.12] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-paper transition hover:border-brass hover:text-brass"
+							>
+								Read the CI² thesis
+							</a>
+						</div>
+					</div>
+
+					<div class="relative z-10 grid max-w-[28rem] gap-5 justify-self-end self-start pt-4">
+						<div class="glass-panel rounded-[2rem] p-6 lg:p-8">
+							<div class="text-xs font-semibold uppercase tracking-[0.24em] text-brass">The operating formula</div>
+							<div class="mt-5 font-serif text-3xl leading-tight text-paper sm:text-4xl">
+								(AI²) + (HI²) = (CI²)
+							</div>
+							<p class="mt-5 text-base leading-7 text-paper-dim">
+								Collaborative Intelligence runs through every brand we build, every system we design,
+								and every decision we help our clients make.
+							</p>
+							<div class="mt-8 grid grid-cols-[72px_1fr] gap-4 border-t border-white/[0.08] pt-6">
+								<div class="flex items-end justify-center text-4xl text-brass">△</div>
+								<div class="text-sm leading-7 text-paper-soft">
+									Not artificial alone. Not human alone. The real advantage is what emerges from the
+									relationship between them.
+								</div>
+							</div>
+						</div>
+
+						<div class="grid gap-4 sm:grid-cols-2">
+							<div class="rounded-[1.6rem] border border-white/[0.08] bg-white/[0.03] p-5">
+								<div class="text-xs font-semibold uppercase tracking-[0.22em] text-brass">Founder</div>
+								<div class="mt-4 font-serif text-2xl text-paper">{contactProfile.name}</div>
+								<div class="mt-1 text-xs uppercase tracking-[0.18em] text-paper-soft">{contactProfile.role}</div>
+							</div>
+							<div class="rounded-[1.6rem] border border-white/[0.08] bg-white/[0.03] p-5">
+								<div class="text-xs font-semibold uppercase tracking-[0.22em] text-brass">Contact</div>
+								<a href={contactProfile.mailto} class="mt-4 block text-sm text-paper-dim transition hover:text-brass">{contactProfile.email}</a>
+								<a href={contactProfile.phoneHref} class="mt-2 block text-sm text-paper-dim transition hover:text-brass">{contactProfile.phone}</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="bg-sand text-ink">
+				<div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
+					<div class="text-center">
+						<div class="text-xs font-semibold uppercase tracking-[0.28em] text-brass-soft">The operating system</div>
+						<div class="mt-6 font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">
+							(AI²)<span class="mx-3 text-brass-soft">+</span>(HI²)<span class="mx-3 text-brass-soft">=</span>(CI²)
+						</div>
+						<p class="mx-auto mt-6 max-w-3xl text-lg leading-8 text-stone-700">
+							<strong>Collaborative Intelligence™</strong> is the spine that runs through the whole
+							studio. It gives WORK LABS a way to talk about brand, strategy, identity, packaging, and
+							consulting as one connected system rather than separate services.
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="border-b border-white/[0.08]">
+				<div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
+					<div class="max-w-4xl">
+						<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">Four paths in</div>
+						<h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">
+							One studio. Several doors. One operating philosophy underneath.
+						</h2>
+					</div>
+					<div class="mt-12 grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
+						{homePathways.map((item) => (
+							<article class="group rounded-[1.75rem] border border-white/[0.08] bg-white/[0.03] p-7 transition hover:border-brass hover:bg-white/[0.05]">
+								<div class="text-xs font-semibold tracking-[0.25em] text-paper-soft">{item.number}</div>
+								<h3 class="mt-5 font-serif text-2xl text-paper">{item.title}</h3>
+								<p class="mt-4 text-base leading-7 text-paper-dim">{item.body}</p>
+								<a href={item.href} class="mt-7 inline-flex text-sm font-semibold uppercase tracking-[0.18em] text-brass no-underline">
+									{item.label}
+								</a>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section class="border-b border-white/[0.08] bg-white/[0.02]">
+				<div class="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[220px_1fr] lg:px-10 lg:py-24">
+					<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">Why now</div>
+					<div>
+						<p class="max-w-4xl font-serif text-3xl leading-tight text-paper sm:text-4xl">
+							In an era when AI can generate almost anything, the scarcest resource is no longer
+							content. It is conviction.
+						</p>
+						<p class="mt-6 max-w-3xl text-lg leading-8 text-paper-dim">
+							A brand with a genuine point of view. A company that knows not just what it makes, but what
+							it means. That is where WORK LABS has room to sound different from a generic agency and more
+							like a strategic operating mind.
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="bg-sand text-ink">
+				<div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
+					<div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+						<div>
+							<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass-soft">The lineage</div>
+							<h2 class="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
+								Firsts matter here as evidence, not noise.
+							</h2>
+						</div>
+						<p class="max-w-3xl text-lg leading-8 text-stone-700">
+							The history is useful because it shows a pattern. WORK LABS has been naming and shaping
+							what comes next for decades. CI² should feel like the newest expression of that same habit.
+						</p>
+					</div>
+					<div class="mt-12 space-y-4">
+						{homeFirsts.map((item) => (
+							<article class="grid gap-4 rounded-[1.5rem] border border-black/[0.08] bg-white/[0.55] p-6 md:grid-cols-[110px_1fr_110px] md:items-start">
+								<div class="text-lg font-semibold tracking-[0.18em] text-brass-soft">{item.year}</div>
+								<div>
+									<h3 class="font-serif text-2xl">{item.title}</h3>
+									<p class="mt-3 max-w-4xl text-base leading-7 text-stone-700">{item.body}</p>
+								</div>
+								<div class="text-sm uppercase tracking-[0.18em] text-stone-500 md:text-right">{item.tag}</div>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section class="border-b border-white/[0.08]">
+				<div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
+					<div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+						<div>
+							<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">Brand Foundry</div>
+							<h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">
+								Five public hero brands. Deeper inventory by request.
+							</h2>
+						</div>
+						<p class="max-w-3xl text-lg leading-8 text-paper-dim">
+							The Foundry should feel curated, strategic, and slightly out of reach. Public hero concepts
+							create intrigue. Category-based request access creates the next step.
+						</p>
+					</div>
+					<div class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+						{foundryHeroBrands.map((brand) => (
+							<article class="group overflow-hidden rounded-[1.7rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.02] transition hover:-translate-y-1 hover:border-brass">
+								<div class="relative aspect-[4/4.6] overflow-hidden border-b border-white/[0.08] bg-[linear-gradient(180deg,#f4f1ea_0%,#ece7de_100%)]">
+									<img
+										src={brand.image}
+										alt={brand.title}
+										class="mx-auto h-full w-full object-contain p-6 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-85"
+										loading="lazy"
+									/>
+									<div class="absolute inset-0 bg-gradient-to-t from-black via-black/6 to-transparent"></div>
+									<div class="absolute left-4 right-4 top-4 flex items-center justify-between text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-stone-300">
+										<span>CI²</span>
+										<span>{brand.status}</span>
+									</div>
+									<div class="absolute bottom-4 left-4 right-4">
+										<div class="font-serif text-3xl leading-none text-paper drop-shadow-sm">{brand.title}</div>
+									</div>
+								</div>
+								<div class="grid gap-3 p-5">
+									<div class="text-xs uppercase tracking-[0.18em] text-paper-soft">{brand.category}</div>
+									<div class="text-sm leading-6 text-paper-dim">
+										Public hero concept preview. Additional Foundry inventory can be shared by request.
+									</div>
+								</div>
+							</article>
+						))}
+					</div>
+					<div class="mt-8 overflow-hidden rounded-[1.8rem] border border-white/[0.08] bg-white/[0.03]">
+						<img
+							src="/images/brand-foundry-brands-ready.png"
+							alt="The Big Thinker's Brainstorming & Idea Co."
+							class="h-auto w-full object-cover"
+							loading="lazy"
+						/>
+					</div>
+				</div>
+			</section>
+
+			<section class="bg-sand text-ink">
+				<div class="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[0.75fr_1.25fr] lg:px-10 lg:py-24">
+					<div class="rounded-[2rem] border border-black/[0.08] bg-white/50 p-8">
+						<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass-soft">Founder</div>
+						<div class="mt-6 overflow-hidden rounded-[1.5rem] border border-black/10 bg-[linear-gradient(135deg,rgba(0,0,0,0.03),rgba(0,0,0,0.08))]">
+							<img
+								src="/images/founder/cabell-harris.png"
+								alt="Cabell Harris"
+								class="h-full w-full object-cover"
+							/>
+						</div>
+					</div>
+					<div>
+						<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass-soft">Cabell Harris</div>
+						<h2 class="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
+							Founder &amp; Creative Director
+						</h2>
+						<p class="mt-6 max-w-3xl text-lg leading-8 text-stone-700">
+							Thirty years as a conceptual artist working in the discipline of brand created the basis
+							for the next phase of WORK LABS. When AI arrived, the real discovery was not redundancy. It
+							was leverage. Judgment, taste, instinct, and cultural fluency became more valuable, not less.
+						</p>
+						<p class="mt-6 max-w-3xl text-lg leading-8 text-stone-700">
+							That realization produced a formula. The formula became the operating philosophy of the
+							studio. Cabell should be visible here as the founder and creative director building the
+							foundation for what WORK becomes next.
+						</p>
+						<div class="mt-8 rounded-[1.5rem] border border-black/[0.08] bg-white/[0.65] p-6">
+							<p class="font-serif text-2xl leading-snug text-stone-800">
+								&quot;Most companies do not have an AI problem. They have a thinking problem.&quot;
+							</p>
+							<div class="mt-4 text-sm uppercase tracking-[0.18em] text-stone-500">
+								{contactProfile.name}
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="relative overflow-hidden">
+				<div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(200,165,106,0.18),transparent_36%)]"></div>
+				<div class="mx-auto max-w-5xl px-6 py-24 text-center lg:px-10 lg:py-28">
+					<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">What's next</div>
+					<h2 class="mt-6 font-serif text-4xl leading-tight text-paper sm:text-5xl lg:text-6xl">
+						Outthink the competition. Don't outspend them.
+					</h2>
+					<p class="mx-auto mt-6 max-w-3xl text-lg leading-8 text-paper-dim">
+						Branding work, strategic consulting, Foundry opportunities, and the CI² thesis all begin in
+						the same place: a better conversation about what needs to be built and why.
+					</p>
+					<div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+						<a href="/contact" class="rounded-full bg-brass px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-ink transition hover:bg-sand">
+							Request a call
+						</a>
+						<a href="/brand-foundry" class="rounded-full border border-white/[0.12] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-paper transition hover:border-brass hover:text-brass">
+							Explore the Foundry
+						</a>
+						<a href="/ci2" class="rounded-full border border-white/[0.12] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-paper transition hover:border-brass hover:text-brass">
+							Read the CI² page
+						</a>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<SiteFooter />
+	</div>
 </Layout>

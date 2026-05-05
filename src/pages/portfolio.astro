@@ -1,0 +1,117 @@
+---
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { portfolioPage, portfolioStudies } from '../data/site';
+import Layout from '../layouts/Layout.astro';
+
+const [proofSection, capabilitySection] = portfolioPage.sections;
+---
+
+<Layout title={portfolioPage.title} description={portfolioPage.metaDescription}>
+  <div class="site-shell">
+    <SiteHeader currentPath="/portfolio" ctaHref="/contact" ctaLabel={portfolioPage.cta.label} />
+
+    <main>
+      <section class="relative overflow-hidden border-b border-white/[0.08]">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(200,165,106,0.15),transparent_28%),radial-gradient(circle_at_82%_20%,rgba(255,255,255,0.05),transparent_26%)]"></div>
+        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brass/60 to-transparent"></div>
+        <div class="mx-auto grid max-w-7xl gap-10 px-6 py-18 lg:grid-cols-[0.95fr_1.05fr] lg:items-end lg:px-10 lg:py-26">
+          <div class="relative z-10">
+            <div class="text-xs font-semibold uppercase tracking-[0.28em] text-brass">{portfolioPage.heroEyebrow}</div>
+            <h1 class="mt-6 max-w-[11ch] font-serif text-[3.1rem] leading-[0.96] text-paper sm:text-[3.7rem] lg:text-[4.2rem]">
+              {portfolioPage.heroTitle}
+            </h1>
+            <p class="mt-8 max-w-3xl text-lg leading-8 text-paper-dim sm:text-xl">{portfolioPage.heroBody}</p>
+            {portfolioPage.heroNote && (
+              <div class="mt-8 max-w-2xl border-l border-brass pl-5 text-sm uppercase tracking-[0.18em] text-paper-soft">
+                {portfolioPage.heroNote}
+              </div>
+            )}
+          </div>
+          <div class="relative z-10 overflow-hidden rounded-[2rem] border border-white/[0.08] bg-white/[0.03] p-4">
+            <img
+              src="/images/portfolio/packaging-work-beer-1.jpg"
+              alt="Selected WORK LABS portfolio"
+              class="h-auto w-full rounded-[1.5rem] object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="border-b border-white/[0.08]">
+        <div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
+          <div class="max-w-4xl">
+            <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">{proofSection.eyebrow}</div>
+            <h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">{proofSection.title}</h2>
+          </div>
+          <div class="mt-12 grid gap-5 lg:grid-cols-3">
+            {'items' in proofSection &&
+              proofSection.items.map((item) => (
+                <article class="rounded-[1.75rem] border border-white/[0.08] bg-white/[0.03] p-7">
+                  <h3 class="font-serif text-2xl text-paper">{item.title}</h3>
+                  <p class="mt-4 text-base leading-7 text-paper-dim">{item.body}</p>
+                </article>
+              ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-sand text-ink">
+        <div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
+          <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass-soft">Selected work</div>
+              <h2 class="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
+                Case-study signals from across categories and mediums.
+              </h2>
+            </div>
+            <p class="max-w-3xl text-lg leading-8 text-stone-700">
+              The point of the portfolio is not volume. It is evidence. These examples show how
+              WORK LABS moves from brand idea to expression across packaging, identity, digital,
+              campaign, and collateral work.
+            </p>
+          </div>
+          <div class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {portfolioStudies.map((study) => (
+              <article class="overflow-hidden rounded-[1.8rem] border border-black/[0.08] bg-white/[0.62]">
+                <div class="aspect-[4/3] overflow-hidden border-b border-black/[0.08]">
+                  <img src={study.image} alt={study.title} class="h-full w-full object-cover" loading="lazy" />
+                </div>
+                <div class="p-6">
+                  <div class="text-xs uppercase tracking-[0.18em] text-stone-500">{study.category}</div>
+                  <h3 class="mt-3 font-serif text-3xl leading-tight text-stone-900">{study.title}</h3>
+                  <p class="mt-4 text-base leading-7 text-stone-700">{study.summary}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(200,165,106,0.18),transparent_34%)]"></div>
+        <div class="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-28">
+          <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">{capabilitySection.eyebrow}</div>
+              <h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">{capabilitySection.title}</h2>
+              <a href="/contact" class="mt-8 inline-flex rounded-full bg-brass px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-ink transition hover:bg-sand">
+                Discuss your project
+              </a>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              {'items' in capabilitySection &&
+                capabilitySection.items.map((item) => (
+                  <div class="rounded-[1.5rem] border border-white/[0.08] bg-white/[0.03] p-6 text-base leading-7 text-paper-dim">
+                    {item}
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</Layout>

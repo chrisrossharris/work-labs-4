@@ -1,0 +1,137 @@
+---
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { aboutPage, contactProfile } from '../data/site';
+import Layout from '../layouts/Layout.astro';
+
+const [studioSection, lineageSection, ideasSection, founderSection, clientSection] = aboutPage.sections;
+---
+
+<Layout title={aboutPage.title} description={aboutPage.metaDescription}>
+  <div class="site-shell">
+    <SiteHeader currentPath="/about" ctaHref="/contact" ctaLabel={aboutPage.cta.label} />
+
+    <main>
+      <section class="relative overflow-hidden border-b border-white/[0.08]">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(200,165,106,0.15),transparent_30%),radial-gradient(circle_at_82%_20%,rgba(255,255,255,0.05),transparent_25%)]"></div>
+        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brass/60 to-transparent"></div>
+        <div class="mx-auto grid max-w-7xl gap-10 px-6 py-18 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:px-10 lg:py-26">
+          <div class="relative z-10">
+            <div class="text-xs font-semibold uppercase tracking-[0.28em] text-brass">{aboutPage.heroEyebrow}</div>
+            <h1 class="mt-6 max-w-[12ch] font-serif text-[3.1rem] leading-[0.96] text-paper sm:text-[3.7rem] lg:text-[4.2rem]">
+              {aboutPage.heroTitle}
+            </h1>
+            <p class="mt-8 max-w-3xl text-lg leading-8 text-paper-dim sm:text-xl">
+              {aboutPage.heroBody}
+            </p>
+            {aboutPage.heroNote && (
+              <div class="mt-8 max-w-2xl border-l border-brass pl-5 text-sm uppercase tracking-[0.18em] text-paper-soft">
+                {aboutPage.heroNote}
+              </div>
+            )}
+          </div>
+          <div class="relative z-10 overflow-hidden rounded-[2rem] border border-white/[0.08] bg-white/[0.03] p-5">
+            <img
+              src="/images/founder/cabell-harris.png"
+              alt="Cabell Harris"
+              class="h-auto w-full rounded-[1.6rem] object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="border-b border-white/[0.08]">
+        <div class="mx-auto max-w-5xl px-6 py-20 lg:px-10 lg:py-24">
+          <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">{studioSection.eyebrow}</div>
+          <h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">{studioSection.title}</h2>
+          <p class="mt-8 max-w-4xl text-lg leading-8 text-paper-dim">{'body' in studioSection ? studioSection.body : ''}</p>
+        </div>
+      </section>
+
+      <section class="bg-sand text-ink">
+        <div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
+          <div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass-soft">{lineageSection.eyebrow}</div>
+              <h2 class="mt-4 font-serif text-4xl leading-tight sm:text-5xl">{lineageSection.title}</h2>
+            </div>
+            {'body' in lineageSection && (
+              <p class="max-w-3xl text-lg leading-8 text-stone-700">{lineageSection.body}</p>
+            )}
+          </div>
+          <div class="mt-12 space-y-4">
+            {'items' in lineageSection &&
+              lineageSection.items.map((item) => (
+                <article class="grid gap-4 rounded-[1.5rem] border border-black/[0.08] bg-white/[0.62] p-6 md:grid-cols-[120px_1fr] md:items-start">
+                  <div class="text-lg font-semibold tracking-[0.18em] text-brass-soft">{item.year}</div>
+                  <div>
+                    <h3 class="font-serif text-2xl">{item.title}</h3>
+                    <p class="mt-3 text-base leading-7 text-stone-700">{item.body}</p>
+                  </div>
+                </article>
+              ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="border-b border-white/[0.08]">
+        <div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
+          <div class="max-w-4xl">
+            <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">{ideasSection.eyebrow}</div>
+            <h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">{ideasSection.title}</h2>
+          </div>
+          <div class="mt-12 grid gap-5 lg:grid-cols-3">
+            {'items' in ideasSection &&
+              ideasSection.items.map((item) => (
+                <article class="rounded-[1.75rem] border border-white/[0.08] bg-white/[0.03] p-7">
+                  <h3 class="font-serif text-2xl text-paper">{item.title}</h3>
+                  <p class="mt-4 text-base leading-7 text-paper-dim">{item.body}</p>
+                </article>
+              ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="border-b border-white/[0.08] bg-white/[0.02]">
+        <div class="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[0.85fr_1.15fr] lg:px-10 lg:py-24">
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">{founderSection.eyebrow}</div>
+            <h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">{founderSection.title}</h2>
+            <div class="mt-8 rounded-[1.6rem] border border-white/[0.08] bg-black/20 p-6">
+              <div class="font-serif text-2xl text-paper">{contactProfile.name}</div>
+              <div class="mt-1 text-sm uppercase tracking-[0.18em] text-paper-soft">{contactProfile.role}</div>
+            </div>
+          </div>
+          {'body' in founderSection && (
+            <div class="text-lg leading-8 text-paper-dim">{founderSection.body}</div>
+          )}
+        </div>
+      </section>
+
+      <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(200,165,106,0.18),transparent_34%)]"></div>
+        <div class="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-28">
+          <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">{clientSection.eyebrow}</div>
+              <h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">{clientSection.title}</h2>
+              <a href="/contact" class="mt-8 inline-flex rounded-full bg-brass px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-ink transition hover:bg-sand">
+                Start a conversation
+              </a>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              {'items' in clientSection &&
+                clientSection.items.map((item) => (
+                  <div class="rounded-[1.5rem] border border-white/[0.08] bg-white/[0.03] p-6 text-base leading-7 text-paper-dim">
+                    {item}
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</Layout>
