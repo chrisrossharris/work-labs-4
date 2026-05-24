@@ -126,11 +126,11 @@ export const homePage: PageData = {
   metaDescription:
     'WORK LABS is a brand strategy and creative studio building enduring systems across Collaborative Intelligence, Brand Foundry, Consulting, and Portfolio.',
   heroEyebrow: 'Brand strategy and creative systems',
-  heroTitle: 'Branding, strategy, identity, packaging, and consulting built inside one operating philosophy.',
+  heroTitle: 'Brand strategy, identity, packaging, and consulting built around Collaborative Intelligence.',
   heroBody:
-    'WORK LABS is a brand strategy and creative studio where Collaborative Intelligence runs through everything. It shapes how brands are built, how decisions are made, how consulting gets applied, and how the next chapter of WORK grows beyond any one project or offering.',
+    'WORK LABS is a brand strategy and creative studio where CI² shapes how brands are built, how decisions are made, and how the next chapter of WORK grows.',
   heroNote:
-    'CI² is not a side idea. It is the operating philosophy WORK LABS needs to own across every path into the business.',
+    'Not artificial alone. Not human alone. The advantage lives in the relationship between them.',
   cta: { href: '/contact', label: 'Request a call' },
   sections: [
     {

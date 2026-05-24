@@ -13,18 +13,18 @@ import { contactProfile, foundryHeroBrands, homeFirsts, homePage, homePathways }
 			<section class="relative overflow-hidden border-b border-white/[0.08]">
 				<div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(200,165,106,0.18),transparent_32%),radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.06),transparent_24%)]"></div>
 				<div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brass to-transparent"></div>
-				<div class="mx-auto grid max-w-7xl gap-12 px-6 py-18 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)] lg:items-start lg:px-10 lg:py-28">
+				<div class="mx-auto grid max-w-7xl gap-12 px-6 py-18 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.82fr)] lg:items-start lg:px-10 lg:py-26">
 					<div class="relative z-10">
 						<div class="text-xs font-semibold uppercase tracking-[0.28em] text-brass">
 							{homePage.heroEyebrow}
 						</div>
-						<h1 class="mt-6 max-w-[13ch] font-serif text-[3.1rem] leading-[0.97] text-paper sm:max-w-[13.5ch] sm:text-[3.45rem] lg:max-w-[14ch] lg:text-[3rem] xl:text-[3.3rem]">
+						<h1 class="mt-6 max-w-[12ch] font-serif text-[2.85rem] leading-[0.98] text-paper sm:max-w-[13ch] sm:text-[3.1rem] lg:max-w-[13ch] lg:text-[3.15rem] xl:text-[3.45rem]">
 							{homePage.heroTitle}
 						</h1>
-						<p class="mt-8 max-w-2xl text-lg leading-8 text-paper-dim sm:text-xl">
+						<p class="mt-7 max-w-[38rem] text-lg leading-8 text-paper-dim sm:text-xl">
 							{homePage.heroBody}
 						</p>
-						<div class="mt-8 max-w-xl border-l border-brass pl-5 text-sm uppercase tracking-[0.18em] text-paper-soft">
+						<div class="mt-7 max-w-xl border-l border-brass/70 pl-5 text-sm uppercase tracking-[0.16em] text-paper-soft">
 							{homePage.heroNote}
 						</div>
 						<div class="mt-10 flex flex-wrap gap-4">
@@ -43,35 +43,46 @@ import { contactProfile, foundryHeroBrands, homeFirsts, homePage, homePathways }
 						</div>
 					</div>
 
-					<div class="relative z-10 grid max-w-[28rem] gap-5 justify-self-end self-start pt-4">
+					<div class="relative z-10 max-w-[27rem] justify-self-end self-start pt-3">
 						<div class="glass-panel rounded-[2rem] p-6 lg:p-8">
 							<div class="text-xs font-semibold uppercase tracking-[0.24em] text-brass">The operating formula</div>
 							<div class="mt-5 font-serif text-3xl leading-tight text-paper sm:text-4xl">
 								(AI²) + (HI²) = (CI²)
 							</div>
-							<p class="mt-5 text-base leading-7 text-paper-dim">
-								Collaborative Intelligence runs through every brand we build, every system we design,
-								and every decision we help our clients make.
+							<p class="mt-4 max-w-md text-base leading-7 text-paper-dim">
+								A simple way to describe how WORK LABS thinks: artificial intelligence, human
+								intelligence, and the third result that emerges when both are directed well.
 							</p>
-							<div class="mt-8 grid grid-cols-[72px_1fr] gap-4 border-t border-white/[0.08] pt-6">
-								<div class="flex items-end justify-center text-4xl text-brass">△</div>
-								<div class="text-sm leading-7 text-paper-soft">
-									Not artificial alone. Not human alone. The real advantage is what emerges from the
-									relationship between them.
+							<div class="mt-7 rounded-[1.5rem] border border-white/[0.08] bg-black/20 p-5">
+								<div class="flex justify-center">
+									<svg
+										width="320"
+										height="220"
+										viewBox="0 0 320 220"
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-auto w-full max-w-[18rem]"
+										aria-hidden="true"
+									>
+										<line x1="54" y1="176" x2="266" y2="176" stroke="rgba(245,241,232,0.72)" stroke-width="1.5" />
+										<line x1="54" y1="176" x2="54" y2="52" stroke="rgba(245,241,232,0.72)" stroke-width="1.5" />
+										<line x1="54" y1="52" x2="266" y2="176" stroke="rgba(111,169,187,0.96)" stroke-width="3" />
+										<circle cx="54" cy="176" r="5" fill="rgba(245,241,232,0.92)" />
+										<circle cx="54" cy="52" r="5" fill="rgba(245,241,232,0.92)" />
+										<circle cx="266" cy="176" r="5" fill="rgba(245,241,232,0.92)" />
+										<text x="42" y="120" fill="rgba(245,241,232,0.94)" font-size="18" font-family="Georgia, serif" text-anchor="end">HI²</text>
+										<text x="160" y="202" fill="rgba(245,241,232,0.94)" font-size="18" font-family="Georgia, serif" text-anchor="middle">AI²</text>
+										<text x="182" y="106" fill="rgba(111,169,187,1)" font-size="18" font-family="Georgia, serif" text-anchor="middle">CI²</text>
+									</svg>
+								</div>
+								<div class="mt-4 grid gap-3 text-sm leading-6 text-paper-soft sm:grid-cols-3 sm:gap-4">
+									<div>AI² expands speed, scale, and possibility.</div>
+									<div>HI² brings judgment, taste, and direction.</div>
+									<div>CI² turns both into a stronger operating advantage.</div>
 								</div>
 							</div>
-						</div>
-
-						<div class="grid gap-4 sm:grid-cols-2">
-							<div class="rounded-[1.6rem] border border-white/[0.08] bg-white/[0.03] p-5">
-								<div class="text-xs font-semibold uppercase tracking-[0.22em] text-brass">Founder</div>
-								<div class="mt-4 font-serif text-2xl text-paper">{contactProfile.name}</div>
-								<div class="mt-1 text-xs uppercase tracking-[0.18em] text-paper-soft">{contactProfile.role}</div>
-							</div>
-							<div class="rounded-[1.6rem] border border-white/[0.08] bg-white/[0.03] p-5">
-								<div class="text-xs font-semibold uppercase tracking-[0.22em] text-brass">Contact</div>
-								<a href={contactProfile.mailto} class="mt-4 block text-sm text-paper-dim transition hover:text-brass">{contactProfile.email}</a>
-								<a href={contactProfile.phoneHref} class="mt-2 block text-sm text-paper-dim transition hover:text-brass">{contactProfile.phone}</a>
+							<div class="mt-6 border-t border-white/[0.08] pt-5 text-sm leading-7 text-paper-soft">
+								Collaborative Intelligence runs through brand strategy, consulting, Brand Foundry,
+								and the way WORK LABS is being built for the future.
 							</div>
 						</div>
 					</div>
