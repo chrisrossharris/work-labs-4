@@ -1,6 +1,61 @@
 ---
 import PageFrame from '../components/PageFrame.astro';
 import { logoArchive, portfolioPage, portfolioStudies } from '../data/site';
+
+const portfolioItems = [
+  ...portfolioStudies.map((study) => ({
+    brand: study.brand,
+    categoryLabel: study.medium,
+    categories: [...study.categories],
+    image: study.image,
+    isLogo: false,
+    summary: study.summary,
+    title: study.title,
+  })),
+  ...logoArchive.map(([brand, image]) => ({
+    brand,
+    categoryLabel: 'Logo / Identity',
+    categories: ['Logo Design', 'Identity'],
+    image,
+    isLogo: true,
+    summary:
+      'A focused identity mark selected from the WORK LABS archive for its clarity, memorability, and ability to carry a brand idea quickly.',
+    title: brand,
+  })),
+];
+
+const categoryFilters = [
+  'All Work',
+  ...Array.from(new Set(portfolioItems.flatMap((item) => item.categories))).sort((a, b) => a.localeCompare(b)),
+];
+
+const brandFilters = [
+  'All Brands',
+  ...Array.from(new Set(portfolioItems.map((item) => item.brand))).sort((a, b) => a.localeCompare(b)),
+];
+
+const viewingPractice = [
+  {
+    body: 'Scan first. The strongest work earns attention before the caption has to explain it.',
+    number: '01',
+    title: 'Start with impact',
+  },
+  {
+    body: 'Filter by category when you want proof of a capability: identity, packaging, digital, campaign, or collateral.',
+    number: '02',
+    title: 'Then judge the craft',
+  },
+  {
+    body: 'Filter by brand when you want to see whether the idea survives across different forms and touchpoints.',
+    number: '03',
+    title: 'Look for system strength',
+  },
+  {
+    body: 'The final question is not whether it is attractive. It is whether it makes the brand easier to recognize, remember, and believe.',
+    number: '04',
+    title: 'End with market effect',
+  },
+];
 ---
 
 <PageFrame title="Work | WORK LABS" description={portfolioPage.metaDescription} currentPath="/work" ctaHref="/contact" ctaLabel="Discuss a Project">
@@ -14,36 +69,87 @@ import { logoArchive, portfolioPage, portfolioStudies } from '../data/site';
 
   <section class="section section--dark">
     <div class="container">
-      <div class="portfolio-grid">
-        {portfolioStudies.map((study) => (
-          <article class="work-tile" data-reveal>
-            <div class="work-tile__image">
-              <img src={study.image} alt={study.title} loading="lazy" />
-            </div>
-            <div class="work-tile__meta"><strong>{study.title}</strong><span>{study.category}</span></div>
+      <div class="split split--end">
+        <div>
+          <div class="eyebrow" data-reveal>How to View the Work</div>
+          <h2 class="section-title" data-reveal>Do not review it as decoration.<br /><span class="italic muted">Review it as evidence.</span></h2>
+        </div>
+        <p class="lede" data-reveal>The best read of a portfolio is not a mood-board pass. It is a sequence: impact, craft, system strength, and market effect.</p>
+      </div>
+      <div class="work-guide">
+        {viewingPractice.map((item) => (
+          <article class="work-guide-card" data-reveal>
+            <strong>{item.number}</strong>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
           </article>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section section--light">
+  <section class="section section--light portfolio-browser" data-portfolio-browser>
     <div class="container">
       <div class="split split--end">
         <div>
-          <div class="eyebrow" data-reveal>Identity</div>
-          <h2 class="section-title" data-reveal>A logo is not a brand.<br /><span class="italic muted">But it is a signal.</span></h2>
+          <div class="eyebrow" data-reveal>Portfolio Browser</div>
+          <h2 class="section-title" data-reveal>View the work by category<br /><span class="italic muted">or by brand.</span></h2>
         </div>
-        <p class="lede" data-reveal>It should be simple enough to recognize, strong enough to endure, and flexible enough to live anywhere. These marks were designed to hold their meaning over time.</p>
+        <p class="lede" data-reveal>A single archive across identity, packaging, digital, collateral, campaigns, and logo design. Use categories to evaluate capability, and brands to evaluate consistency of thought.</p>
       </div>
-      <div class="logo-grid" style="margin-top:72px;">
-        {logoArchive.map(([name, image]) => (
-          <figure class="logo-tile" data-reveal>
-            <div class="logo-tile__image"><img src={image} alt={`${name} logo`} loading="lazy" /></div>
-            <figcaption>{name}</figcaption>
-          </figure>
+
+      <div class="portfolio-controls" data-reveal>
+        <div class="portfolio-filter">
+          <span class="filter-label">Category</span>
+          <div class="filter-pills" aria-label="View work by category">
+            {categoryFilters.map((category) => (
+              <button
+                class={category === 'All Work' ? 'filter-pill is-active' : 'filter-pill'}
+                type="button"
+                data-filter-category={category}
+                aria-pressed={category === 'All Work' ? 'true' : 'false'}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+        <label class="portfolio-filter portfolio-filter--brand">
+          <span class="filter-label">Brand</span>
+          <select data-brand-filter aria-label="View work by brand">
+            {brandFilters.map((brand) => <option value={brand}>{brand}</option>)}
+          </select>
+        </label>
+      </div>
+
+      <div class="portfolio-status" data-portfolio-status data-reveal>{portfolioItems.length} pieces shown</div>
+
+      <div class="portfolio-grid portfolio-grid--browser" data-portfolio-grid>
+        {portfolioItems.map((item) => (
+          <article
+            class={`work-tile work-tile--portfolio ${item.isLogo ? 'work-tile--logo' : ''}`}
+            data-portfolio-item
+            data-brand={item.brand}
+            data-categories={item.categories.join('|')}
+            data-reveal
+          >
+            <div class="work-tile__image">
+              <img src={item.image} alt={`${item.brand} ${item.categoryLabel}`} loading="lazy" />
+            </div>
+            <div class="work-tile__content">
+              <div class="work-tile__meta">
+                <strong>{item.brand}</strong>
+                <span>{item.categoryLabel}</span>
+              </div>
+              <p class="work-tile__summary">{item.summary}</p>
+              <div class="work-tile__tags" aria-label={`${item.brand} categories`}>
+                {item.categories.map((category) => <span>{category}</span>)}
+              </div>
+            </div>
+          </article>
         ))}
       </div>
+      <p class="portfolio-empty" data-portfolio-empty hidden>No work matches that combination. Reset the brand or category to widen the view.</p>
     </div>
   </section>
 
@@ -57,3 +163,56 @@ import { logoArchive, portfolioPage, portfolioStudies } from '../data/site';
     </div>
   </section>
 </PageFrame>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-portfolio-browser]');
+    if (!root) return;
+
+    const categoryButtons = Array.from(root.querySelectorAll('[data-filter-category]'));
+    const brandFilter = root.querySelector('[data-brand-filter]');
+    const items = Array.from(root.querySelectorAll('[data-portfolio-item]'));
+    const status = root.querySelector('[data-portfolio-status]');
+    const empty = root.querySelector('[data-portfolio-empty]');
+    let activeCategory = 'All Work';
+
+    const updatePortfolio = () => {
+      const activeBrand = brandFilter?.value || 'All Brands';
+      let visibleCount = 0;
+
+      items.forEach((item) => {
+        const categories = (item.dataset.categories || '').split('|');
+        const matchesCategory = activeCategory === 'All Work' || categories.includes(activeCategory);
+        const matchesBrand = activeBrand === 'All Brands' || item.dataset.brand === activeBrand;
+        const isVisible = matchesCategory && matchesBrand;
+
+        item.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
+      });
+
+      categoryButtons.forEach((button) => {
+        const isActive = button.dataset.filterCategory === activeCategory;
+        button.classList.toggle('is-active', isActive);
+        button.setAttribute('aria-pressed', String(isActive));
+      });
+
+      if (status) {
+        status.textContent = `${visibleCount} ${visibleCount === 1 ? 'piece' : 'pieces'} shown`;
+      }
+
+      if (empty) {
+        empty.hidden = visibleCount !== 0;
+      }
+    };
+
+    categoryButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeCategory = button.dataset.filterCategory || 'All Work';
+        updatePortfolio();
+      });
+    });
+
+    brandFilter?.addEventListener('change', updatePortfolio);
+    updatePortfolio();
+  })();
+</script>

@@ -831,43 +831,61 @@ export const ciFirsts = [
 
 export const portfolioStudies = [
   {
+    brand: 'WORK Beer',
     category: 'Packaging',
+    categories: ['Packaging', 'Identity'],
     image: '/images/portfolio/packaging-work-beer-1.jpg',
+    medium: 'Packaging / Identity',
     summary:
       'Brand-led packaging work that shows how an identity system can move into product expression without losing clarity or edge.',
     title: 'WORK Beer',
   },
   {
+    brand: 'Verdiva',
     category: 'Identity / Packaging',
+    categories: ['Identity', 'Packaging'],
     image: '/images/portfolio/packaging-verdiva.jpg',
+    medium: 'Identity / Packaging',
     summary:
       'A case in how visual refinement, market positioning, and product presentation come together as one commercial decision.',
     title: 'Verdiva',
   },
   {
+    brand: 'Truth Reels',
     category: 'Digital',
+    categories: ['Digital', 'Brand Expression'],
     image: '/images/portfolio/web-truth-reels.jpg',
+    medium: 'Digital / Brand Expression',
     summary:
       'Digital brand expression shaped to carry message, tone, and clarity across a more fluid media environment.',
     title: 'Truth Reels',
   },
   {
+    brand: 'Virginia Tourism',
     category: 'Identity Systems',
+    categories: ['Identity', 'Brand Systems'],
     image: '/images/portfolio/logos-va-tourism.jpg',
+    medium: 'Identity System',
     summary:
       'Identity work designed to hold together across multiple applications while still feeling distinctive at a glance.',
     title: 'Virginia Tourism',
   },
   {
+    brand: 'Richmond Rising',
     category: 'Collateral',
+    categories: ['Campaign', 'Collateral'],
     image: '/images/portfolio/collateral-richmond-rising-5.jpg',
+    medium: 'Campaign / Collateral',
     summary:
       'Campaign and collateral work built to make brand thinking visible in the real world, not just in a presentation.',
     title: 'Richmond Rising',
   },
   {
+    brand: 'Big Thinkers',
     category: 'Brand Expression',
+    categories: ['Brand Expression', 'Collateral'],
     image: '/images/portfolio/stationery-big-thinkers.jpg',
+    medium: 'Brand Expression',
     summary:
       'A study in how even smaller brand touchpoints can reinforce a larger strategic point of view.',
     title: 'Big Thinkers',
