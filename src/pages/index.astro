@@ -1,297 +1,139 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import SiteFooter from '../components/SiteFooter.astro';
-import SiteHeader from '../components/SiteHeader.astro';
-import { contactProfile, foundryHeroBrands, homeFirsts, homePage, homePathways } from '../data/site';
+import BrandPlatformGrid from '../components/BrandPlatformGrid.astro';
+import PageFrame from '../components/PageFrame.astro';
+import { homeFirsts, homePage, homePathways } from '../data/site';
 ---
 
-<Layout title="WORK LABS" description={homePage.metaDescription}>
-	<div class="site-shell">
-		<SiteHeader currentPath="/" ctaHref="/contact" ctaLabel="Request a call" />
+<PageFrame title="WORK LABS" description={homePage.metaDescription} currentPath="/" ctaHref="/contact" ctaLabel="Start a Conversation">
+  <section class="hero">
+    <div class="container">
+      <div class="hero__meta" data-reveal>
+        <span>WORK LABS</span><span class="dot"></span><span>Richmond, VA</span><span class="dot"></span><span>Est. 1993</span>
+      </div>
+      <h1 class="page-title" data-reveal style="--reveal-delay:90ms;">WORK LABS.<br /><span class="italic muted">Home of Collaborative Intelligence.</span></h1>
+      <p class="hero__sub" data-reveal style="--reveal-delay:160ms;">
+        A brand strategy and creative studio built on a single conviction: the most powerful creative force in business today is the intelligence that emerges when artificial and human are wielded together by someone who knows the difference.
+      </p>
+      <div class="hero__actions" data-reveal style="--reveal-delay:230ms;">
+        <a class="btn btn--primary" href="/brand-foundry">Explore the Foundry</a>
+        <a class="btn" href="/ci2">Read the CI² Thesis</a>
+      </div>
+    </div>
+  </section>
 
-		<main>
-			<section class="relative overflow-hidden border-b border-white/[0.08]">
-				<div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(200,165,106,0.18),transparent_32%),radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.06),transparent_24%)]"></div>
-				<div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brass to-transparent"></div>
-				<div class="mx-auto grid max-w-7xl gap-12 px-6 py-18 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.82fr)] lg:items-start lg:px-10 lg:py-26">
-					<div class="relative z-10">
-						<div class="text-xs font-semibold uppercase tracking-[0.28em] text-brass">
-							{homePage.heroEyebrow}
-						</div>
-						<h1 class="mt-6 max-w-[12ch] font-serif text-[2.85rem] leading-[0.98] text-paper sm:max-w-[13ch] sm:text-[3.1rem] lg:max-w-[13ch] lg:text-[3.15rem] xl:text-[3.45rem]">
-							{homePage.heroTitle}
-						</h1>
-						<p class="mt-7 max-w-[38rem] text-lg leading-8 text-paper-dim sm:text-xl">
-							{homePage.heroBody}
-						</p>
-						<div class="mt-7 max-w-xl border-l border-brass/70 pl-5 text-sm uppercase tracking-[0.16em] text-paper-soft">
-							{homePage.heroNote}
-						</div>
-						<div class="mt-10 flex flex-wrap gap-4">
-							<a
-								href="/contact"
-								class="rounded-full bg-brass px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-ink transition hover:bg-sand"
-							>
-								Request a call
-							</a>
-							<a
-								href="/ci2"
-								class="rounded-full border border-white/[0.12] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-paper transition hover:border-brass hover:text-brass"
-							>
-								Read the CI² thesis
-							</a>
-						</div>
-					</div>
+  <section class="section section--light section--compact">
+    <div class="container" style="text-align:center;">
+      <div class="eyebrow" data-reveal>The Operating System</div>
+      <div class="formula formula--large" data-reveal style="--reveal-delay:100ms;">
+        (AI<sup>2</sup>)<span class="plus">+</span>(HI<sup>2</sup>)<span class="equals">=</span>(CI<sup>2</sup>)
+      </div>
+      <p class="lede" data-reveal style="--reveal-delay:180ms; margin:36px auto 0;">
+        <strong>Collaborative Intelligence™</strong> is the spine that runs through every brand we build, every system we design, and every decision we help clients make.
+      </p>
+      <svg class="triangle" data-reveal viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line class="tri-line" style="--d:0ms;" pathLength="1" x1="54" y1="176" x2="266" y2="176" stroke="#0a0a0a" stroke-width="1.5" />
+        <line class="tri-line" style="--d:160ms;" pathLength="1" x1="54" y1="176" x2="54" y2="52" stroke="#0a0a0a" stroke-width="1.5" />
+        <line class="tri-line" style="--d:320ms;" pathLength="1" x1="54" y1="52" x2="266" y2="176" stroke="#c6a35a" stroke-width="3" />
+        <circle cx="54" cy="176" r="5" fill="#c6a35a" />
+        <circle cx="54" cy="52" r="5" fill="#c6a35a" />
+        <circle cx="266" cy="176" r="5" fill="#c6a35a" />
+        <text x="42" y="120" fill="#0a0a0a" font-size="18" font-family="Georgia, serif" text-anchor="end">HI</text>
+        <text x="160" y="202" fill="#0a0a0a" font-size="18" font-family="Georgia, serif" text-anchor="middle">AI</text>
+        <text x="182" y="106" fill="#c6a35a" font-size="18" font-family="Georgia, serif" text-anchor="middle">CI</text>
+      </svg>
+    </div>
+  </section>
 
-					<div class="relative z-10 max-w-[27rem] justify-self-end self-start pt-3">
-						<div class="glass-panel rounded-[2rem] p-6 lg:p-8">
-							<div class="text-xs font-semibold uppercase tracking-[0.24em] text-brass">The operating formula</div>
-							<div class="mt-5 font-serif text-3xl leading-tight text-paper sm:text-4xl">
-								(AI²) + (HI²) = (CI²)
-							</div>
-							<p class="mt-4 max-w-md text-base leading-7 text-paper-dim">
-								A simple way to describe how WORK LABS thinks: artificial intelligence, human
-								intelligence, and the third result that emerges when both are directed well.
-							</p>
-							<div class="mt-7 rounded-[1.5rem] border border-white/[0.08] bg-black/20 p-5">
-								<div class="flex justify-center">
-									<svg
-										width="320"
-										height="220"
-										viewBox="0 0 320 220"
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-auto w-full max-w-[18rem]"
-										aria-hidden="true"
-									>
-										<line x1="54" y1="176" x2="266" y2="176" stroke="rgba(245,241,232,0.72)" stroke-width="1.5" />
-										<line x1="54" y1="176" x2="54" y2="52" stroke="rgba(245,241,232,0.72)" stroke-width="1.5" />
-										<line x1="54" y1="52" x2="266" y2="176" stroke="rgba(111,169,187,0.96)" stroke-width="3" />
-										<circle cx="54" cy="176" r="5" fill="rgba(245,241,232,0.92)" />
-										<circle cx="54" cy="52" r="5" fill="rgba(245,241,232,0.92)" />
-										<circle cx="266" cy="176" r="5" fill="rgba(245,241,232,0.92)" />
-										<text x="42" y="120" fill="rgba(245,241,232,0.94)" font-size="18" font-family="Georgia, serif" text-anchor="end">HI²</text>
-										<text x="160" y="202" fill="rgba(245,241,232,0.94)" font-size="18" font-family="Georgia, serif" text-anchor="middle">AI²</text>
-										<text x="182" y="106" fill="rgba(111,169,187,1)" font-size="18" font-family="Georgia, serif" text-anchor="middle">CI²</text>
-									</svg>
-								</div>
-								<div class="mt-4 grid gap-3 text-sm leading-6 text-paper-soft sm:grid-cols-3 sm:gap-4">
-									<div>AI² expands speed, scale, and possibility.</div>
-									<div>HI² brings judgment, taste, and direction.</div>
-									<div>CI² turns both into a stronger operating advantage.</div>
-								</div>
-							</div>
-							<div class="mt-6 border-t border-white/[0.08] pt-5 text-sm leading-7 text-paper-soft">
-								Collaborative Intelligence runs through brand strategy, consulting, Brand Foundry,
-								and the way WORK LABS is being built for the future.
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+  <section class="section section--dark">
+    <div class="container">
+      <div class="split split--end">
+        <div>
+          <div class="eyebrow" data-reveal>Three Paths In</div>
+          <h2 class="section-title" data-reveal>One studio. <span class="italic muted">Three doors.</span><br />One operating system underneath.</h2>
+        </div>
+        <p class="lede" data-reveal>Choose the door that fits the moment. The method underneath stays the same: sharper intelligence, cleaner judgment, and work built to hold up.</p>
+      </div>
+      <div class="feature-grid" style="margin-top:72px;">
+        {homePathways.slice(1).map((item, index) => (
+          <article class="card" data-reveal>
+            <div class="card__number">0{index + 1}</div>
+            <h3 class="card-title">{item.title}</h3>
+            <p>{item.body}</p>
+            <a class="arrow-link" href={item.href}>{item.label}</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 
-			<section class="bg-sand text-ink">
-				<div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
-					<div class="text-center">
-						<div class="text-xs font-semibold uppercase tracking-[0.28em] text-brass-soft">The operating system</div>
-						<div class="mt-6 font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">
-							(AI²)<span class="mx-3 text-brass-soft">+</span>(HI²)<span class="mx-3 text-brass-soft">=</span>(CI²)
-						</div>
-						<p class="mx-auto mt-6 max-w-3xl text-lg leading-8 text-stone-700">
-							<strong>Collaborative Intelligence™</strong> is the spine that runs through the whole
-							studio. It gives WORK LABS a way to talk about brand, strategy, identity, packaging, and
-							consulting as one connected system rather than separate services.
-						</p>
-					</div>
-				</div>
-			</section>
+  <section class="section section--ink">
+    <div class="container split">
+      <div class="eyebrow" data-reveal>Why Now</div>
+      <div>
+        <p class="display" data-reveal style="max-width:980px; font-family:var(--serif); font-size:clamp(30px,3.4vw,48px); line-height:1.22; font-weight:300;">
+          In an era when AI can generate anything, the scarcest resource is no longer content. <span class="italic brass">It is conviction.</span>
+        </p>
+        <p class="lede" data-reveal style="margin-top:28px;">A brand with a genuine point of view. A company that knows not just what it makes, but what it means.</p>
+      </div>
+    </div>
+  </section>
 
-			<section class="border-b border-white/[0.08]">
-				<div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
-					<div class="max-w-4xl">
-						<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">Four paths in</div>
-						<h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">
-							One studio. Several doors. One operating philosophy underneath.
-						</h2>
-					</div>
-					<div class="mt-12 grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
-						{homePathways.map((item) => (
-							<article class="group rounded-[1.75rem] border border-white/[0.08] bg-white/[0.03] p-7 transition hover:border-brass hover:bg-white/[0.05]">
-								<div class="text-xs font-semibold tracking-[0.25em] text-paper-soft">{item.number}</div>
-								<h3 class="mt-5 font-serif text-2xl text-paper">{item.title}</h3>
-								<p class="mt-4 text-base leading-7 text-paper-dim">{item.body}</p>
-								<a href={item.href} class="mt-7 inline-flex text-sm font-semibold uppercase tracking-[0.18em] text-brass no-underline">
-									{item.label}
-								</a>
-							</article>
-						))}
-					</div>
-				</div>
-			</section>
+  <section class="section section--light">
+    <div class="container">
+      <div class="split split--end">
+        <div>
+          <div class="eyebrow" data-reveal>The Lineage</div>
+          <h2 class="section-title" data-reveal>Eleven firsts.<br /><span class="italic muted">Three decades.</span><br />One studio.</h2>
+        </div>
+        <p class="lede" data-reveal>Being first is not a goal. It is what happens when you pay close enough attention.</p>
+      </div>
+      <div class="timeline">
+        {homeFirsts.map((item) => (
+          <div class="timeline__row" data-reveal>
+            <div class="timeline__year">{item.year}</div>
+            <div class="timeline__body"><strong>{item.title}</strong> {item.body}</div>
+            <div class="timeline__tag">{item.tag}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 
-			<section class="border-b border-white/[0.08] bg-white/[0.02]">
-				<div class="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[220px_1fr] lg:px-10 lg:py-24">
-					<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">Why now</div>
-					<div>
-						<p class="max-w-4xl font-serif text-3xl leading-tight text-paper sm:text-4xl">
-							In an era when AI can generate almost anything, the scarcest resource is no longer
-							content. It is conviction.
-						</p>
-						<p class="mt-6 max-w-3xl text-lg leading-8 text-paper-dim">
-							A brand with a genuine point of view. A company that knows not just what it makes, but what
-							it means. That is where WORK LABS has room to sound different from a generic agency and more
-							like a strategic operating mind.
-						</p>
-					</div>
-				</div>
-			</section>
+  <section class="section section--dark">
+    <div class="container">
+      <div class="split split--end">
+        <div>
+          <div class="eyebrow" data-reveal>The Foundry</div>
+          <h2 class="section-title" data-reveal>Brands built inside <span class="italic muted">Collaborative Intelligence.</span></h2>
+        </div>
+        <p class="lede" data-reveal>A small, curated inventory of investment-grade brand platforms, conceived, named, designed, and framed for qualified operators and acquirers.</p>
+      </div>
+      <BrandPlatformGrid />
+    </div>
+  </section>
 
-			<section class="bg-sand text-ink">
-				<div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
-					<div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-						<div>
-							<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass-soft">The lineage</div>
-							<h2 class="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
-								Firsts matter here as evidence, not noise.
-							</h2>
-						</div>
-						<p class="max-w-3xl text-lg leading-8 text-stone-700">
-							The history is useful because it shows a pattern. WORK LABS has been naming and shaping
-							what comes next for decades. CI² should feel like the newest expression of that same habit.
-						</p>
-					</div>
-					<div class="mt-12 space-y-4">
-						{homeFirsts.map((item) => (
-							<article class="grid gap-4 rounded-[1.5rem] border border-black/[0.08] bg-white/[0.55] p-6 md:grid-cols-[110px_1fr_110px] md:items-start">
-								<div class="text-lg font-semibold tracking-[0.18em] text-brass-soft">{item.year}</div>
-								<div>
-									<h3 class="font-serif text-2xl">{item.title}</h3>
-									<p class="mt-3 max-w-4xl text-base leading-7 text-stone-700">{item.body}</p>
-								</div>
-								<div class="text-sm uppercase tracking-[0.18em] text-stone-500 md:text-right">{item.tag}</div>
-							</article>
-						))}
-					</div>
-				</div>
-			</section>
+  <section class="section section--light">
+    <div class="container split">
+      <div class="founder-photo" data-reveal>
+        <img src="/images/founder/cabell-harris.png" alt="Cabell Harris" />
+      </div>
+      <div>
+        <div class="eyebrow" data-reveal>The Architect</div>
+        <h2 class="section-title" data-reveal>Cabell Harris</h2>
+        <p class="lede" data-reveal style="margin-top:32px;">Thirty years as a conceptual artist working in the discipline of brand. When AI arrived, the discovery was not that human judgment had become less valuable. It was that taste, instinct, context, and restraint mattered more.</p>
+        <div class="quote" data-reveal>"A military strategist with a sense of humor, a mad professor with taste, and more going on in his own head than most of the advertising industry."</div>
+      </div>
+    </div>
+  </section>
 
-			<section class="border-b border-white/[0.08]">
-				<div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
-					<div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-						<div>
-							<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">Brand Foundry</div>
-							<h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">
-								Five public hero brands. Deeper inventory by request.
-							</h2>
-						</div>
-						<p class="max-w-3xl text-lg leading-8 text-paper-dim">
-							The Foundry should feel curated, strategic, and slightly out of reach. Public hero concepts
-							create intrigue. Category-based request access creates the next step.
-						</p>
-					</div>
-					<div class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
-						{foundryHeroBrands.map((brand) => (
-							<article class="group overflow-hidden rounded-[1.7rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.02] transition hover:-translate-y-1 hover:border-brass">
-								<div class="relative aspect-[4/4.6] overflow-hidden border-b border-white/[0.08] bg-[linear-gradient(180deg,#f4f1ea_0%,#ece7de_100%)]">
-									<img
-										src={brand.image}
-										alt={brand.title}
-										class="mx-auto h-full w-full object-contain p-6 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-85"
-										loading="lazy"
-									/>
-									<div class="absolute inset-0 bg-gradient-to-t from-black via-black/6 to-transparent"></div>
-									<div class="absolute left-4 right-4 top-4 flex items-center justify-between text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-stone-300">
-										<span>CI²</span>
-										<span>{brand.status}</span>
-									</div>
-									<div class="absolute bottom-4 left-4 right-4">
-										<div class="font-serif text-3xl leading-none text-paper drop-shadow-sm">{brand.title}</div>
-									</div>
-								</div>
-								<div class="grid gap-3 p-5">
-									<div class="text-xs uppercase tracking-[0.18em] text-paper-soft">{brand.category}</div>
-									<div class="text-sm leading-6 text-paper-dim">
-										Public hero concept preview. Additional Foundry inventory can be shared by request.
-									</div>
-								</div>
-							</article>
-						))}
-					</div>
-					<div class="mt-8 overflow-hidden rounded-[1.8rem] border border-white/[0.08] bg-white/[0.03]">
-						<img
-							src="/images/brand-foundry-brands-ready.png"
-							alt="The Big Thinker's Brainstorming & Idea Co."
-							class="h-auto w-full object-cover"
-							loading="lazy"
-						/>
-					</div>
-				</div>
-			</section>
-
-			<section class="bg-sand text-ink">
-				<div class="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[0.75fr_1.25fr] lg:px-10 lg:py-24">
-					<div class="rounded-[2rem] border border-black/[0.08] bg-white/50 p-8">
-						<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass-soft">Founder</div>
-						<div class="mt-6 overflow-hidden rounded-[1.5rem] border border-black/10 bg-[linear-gradient(135deg,rgba(0,0,0,0.03),rgba(0,0,0,0.08))]">
-							<img
-								src="/images/founder/cabell-harris.png"
-								alt="Cabell Harris"
-								class="h-full w-full object-cover"
-							/>
-						</div>
-					</div>
-					<div>
-						<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass-soft">Cabell Harris</div>
-						<h2 class="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
-							Founder &amp; Creative Director
-						</h2>
-						<p class="mt-6 max-w-3xl text-lg leading-8 text-stone-700">
-							Thirty years as a conceptual artist working in the discipline of brand created the basis
-							for the next phase of WORK LABS. When AI arrived, the real discovery was not redundancy. It
-							was leverage. Judgment, taste, instinct, and cultural fluency became more valuable, not less.
-						</p>
-						<p class="mt-6 max-w-3xl text-lg leading-8 text-stone-700">
-							That realization produced a formula. The formula became the operating philosophy of the
-							studio. Cabell should be visible here as the founder and creative director building the
-							foundation for what WORK becomes next.
-						</p>
-						<div class="mt-8 rounded-[1.5rem] border border-black/[0.08] bg-white/[0.65] p-6">
-							<p class="font-serif text-2xl leading-snug text-stone-800">
-								&quot;Most companies do not have an AI problem. They have a thinking problem.&quot;
-							</p>
-							<div class="mt-4 text-sm uppercase tracking-[0.18em] text-stone-500">
-								{contactProfile.name}
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="relative overflow-hidden">
-				<div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(200,165,106,0.18),transparent_36%)]"></div>
-				<div class="mx-auto max-w-5xl px-6 py-24 text-center lg:px-10 lg:py-28">
-					<div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">What's next</div>
-					<h2 class="mt-6 font-serif text-4xl leading-tight text-paper sm:text-5xl lg:text-6xl">
-						Outthink the competition. Don't outspend them.
-					</h2>
-					<p class="mx-auto mt-6 max-w-3xl text-lg leading-8 text-paper-dim">
-						Branding work, strategic consulting, Foundry opportunities, and the CI² thesis all begin in
-						the same place: a better conversation about what needs to be built and why.
-					</p>
-					<div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-						<a href="/contact" class="rounded-full bg-brass px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-ink transition hover:bg-sand">
-							Request a call
-						</a>
-						<a href="/brand-foundry" class="rounded-full border border-white/[0.12] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-paper transition hover:border-brass hover:text-brass">
-							Explore the Foundry
-						</a>
-						<a href="/ci2" class="rounded-full border border-white/[0.12] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-paper transition hover:border-brass hover:text-brass">
-							Read the CI² page
-						</a>
-					</div>
-				</div>
-			</section>
-		</main>
-
-		<SiteFooter />
-	</div>
-</Layout>
+  <section class="section section--dark" style="text-align:center;">
+    <div class="container">
+      <div class="eyebrow" data-reveal>What's Next</div>
+      <h2 class="section-title" data-reveal style="margin-inline:auto;">Outthink the competition.<br /><span class="italic muted">Do not outspend them.</span></h2>
+      <div class="hero__actions" data-reveal style="justify-content:center;">
+        <a class="btn btn--primary" href="/contact">Start a Conversation</a>
+        <a class="btn" href="/work">View the Work</a>
+      </div>
+    </div>
+  </section>
+</PageFrame>

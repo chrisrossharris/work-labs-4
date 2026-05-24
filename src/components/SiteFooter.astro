@@ -2,27 +2,35 @@
 import { contactProfile } from '../data/site';
 ---
 
-<footer class="mx-auto max-w-7xl px-6 py-12 lg:px-10">
-  <div class="grid gap-8 rounded-[2rem] border border-white/[0.08] bg-white/[0.03] p-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-    <div>
-      <div class="text-xs font-semibold uppercase tracking-[0.28em] text-brass">
-        Collaborative Intelligence
-      </div>
-      <div class="mt-4 font-serif text-3xl text-paper sm:text-4xl">
-        Home of Collaborative Intelligence™
-      </div>
-      <p class="mt-4 max-w-3xl text-base leading-7 text-paper-dim">
-        WORK LABS is being structured as a clearer institution: founder-led in taste and
-        philosophy, built for stronger engagement, clearer conversion, and long-term growth.
-      </p>
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__brand">
+      <div class="formula-mini">(AI<sup>2</sup>) + (HI<sup>2</sup>) = (CI<sup>2</sup>)</div>
+      <p>Collaborative Intelligence™ is the operating system of WORK LABS: a brand strategy and creative studio built for what comes next.</p>
     </div>
-    <div class="justify-self-start lg:justify-self-end">
-      <div class="space-y-3 text-sm text-paper-dim">
-        <div class="font-serif text-xl text-paper">{contactProfile.name}</div>
-        <div class="uppercase tracking-[0.18em] text-paper-soft">{contactProfile.role}</div>
-        <a href={contactProfile.mailto} class="block transition hover:text-brass">{contactProfile.email}</a>
-        <a href={contactProfile.phoneHref} class="block transition hover:text-brass">{contactProfile.phone}</a>
-      </div>
+    <div class="site-footer__col">
+      <h4>Studio</h4>
+      <a href="/about">About</a>
+      <a href="/ci2">CI²</a>
+      <a href="/work">Work</a>
+      <a href="/contact">Contact</a>
     </div>
+    <div class="site-footer__col">
+      <h4>Engage</h4>
+      <a href="/brand-foundry">The Foundry</a>
+      <a href="/consulting">Consulting</a>
+      <a href="/contact">Speaking</a>
+      <a href="/contact">Press</a>
+    </div>
+    <div class="site-footer__col">
+      <h4>Locate</h4>
+      <a href={contactProfile.mailto}>{contactProfile.email}</a>
+      <a href={contactProfile.phoneHref}>{contactProfile.phone}</a>
+      <span>Richmond, VA</span>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <span>Collaborative Intelligence™ © Cabell Harris / WORK LABS · Est. 1993</span>
+    <span>All rights reserved</span>
   </div>
 </footer>

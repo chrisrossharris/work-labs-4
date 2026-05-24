@@ -1,0 +1,164 @@
+---
+import { foundryHeroBrands } from '../data/site';
+
+interface Props {
+  reveal?: boolean;
+}
+
+const { reveal = true } = Astro.props;
+const platformJson = JSON.stringify(foundryHeroBrands).replace(/</g, '\\u003c');
+---
+
+<div class="brand-platform-grid">
+  {foundryHeroBrands.map((brand) => (
+    <button
+      type="button"
+      class="brand-card"
+      data-platform={brand.slug}
+      data-reveal={reveal ? '' : undefined}
+      aria-label={`Open ${brand.title} platform dossier`}
+    >
+      <span class="brand-card__stamp">CI²</span>
+      <span class="brand-card__art"><img src={brand.image} alt={`${brand.title} logo`} loading="lazy" /></span>
+      <span class="brand-card__body">
+        <h3>{brand.title}</h3>
+        <span class="brand-card__meta"><span>{brand.category}</span><span>{brand.status}</span></span>
+      </span>
+    </button>
+  ))}
+</div>
+
+<div class="platform-modal" id="platform-modal" aria-hidden="true">
+  <button class="platform-modal__backdrop" type="button" data-platform-close aria-label="Close platform dossier"></button>
+  <article class="platform-dossier" role="dialog" aria-modal="true" aria-labelledby="platform-title" aria-describedby="platform-thesis" tabindex="-1">
+    <button class="platform-dossier__close" type="button" data-platform-close aria-label="Close platform dossier">&times;</button>
+    <div class="platform-dossier__grid">
+      <div class="platform-dossier__visual">
+        <div class="platform-dossier__stamp">
+          <span>WORK Brand Foundry</span>
+          <span>CI²</span>
+        </div>
+        <div class="platform-dossier__mark">
+          <img id="platform-image" src={foundryHeroBrands[0].image} alt="" />
+        </div>
+        <div class="platform-dossier__meta">
+          <span class="label" id="platform-category">{foundryHeroBrands[0].category}</span>
+          <h3 id="platform-visual-name">{foundryHeroBrands[0].title}</h3>
+        </div>
+      </div>
+      <div class="platform-dossier__content">
+        <div class="platform-dossier__eyebrow">Platform Dossier · Launch Architecture</div>
+        <h2 id="platform-title"><span id="platform-headline-main">{foundryHeroBrands[0].headlineMain}</span> <span class="italic" id="platform-headline-italic">{foundryHeroBrands[0].headlineItalic}</span></h2>
+        <p class="platform-dossier__thesis" id="platform-thesis">{foundryHeroBrands[0].thesis}</p>
+        <div class="platform-dossier__chips" id="platform-chips"></div>
+        <div class="platform-readiness" id="platform-readiness"></div>
+        <div class="platform-launch">
+          <h4>What is already built.</h4>
+          <ul id="platform-launch-list"></ul>
+        </div>
+        <div class="platform-dossier__footer">
+          <a class="btn btn--primary" href="/contact" data-platform-close>Request the full brief</a>
+          <button class="btn" type="button" data-platform-close>Return to inventory</button>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+
+<script type="application/json" id="platform-data" set:html={platformJson} />
+
+<script is:inline>
+  (() => {
+    const dataEl = document.getElementById('platform-data');
+    const modal = document.getElementById('platform-modal');
+    const dossier = modal?.querySelector('.platform-dossier');
+    const cards = document.querySelectorAll('.brand-card[data-platform]');
+    if (!dataEl || !modal || !dossier || !cards.length) return;
+
+    const platforms = JSON.parse(dataEl.textContent || '[]');
+    const platformMap = new Map(platforms.map((platform) => [platform.slug, platform]));
+    const els = {
+      image: document.getElementById('platform-image'),
+      category: document.getElementById('platform-category'),
+      visualName: document.getElementById('platform-visual-name'),
+      headlineMain: document.getElementById('platform-headline-main'),
+      headlineItalic: document.getElementById('platform-headline-italic'),
+      thesis: document.getElementById('platform-thesis'),
+      chips: document.getElementById('platform-chips'),
+      readiness: document.getElementById('platform-readiness'),
+      launch: document.getElementById('platform-launch-list'),
+    };
+    let lastFocus = null;
+
+    const replaceChildren = (container, items, createChild) => {
+      const fragment = document.createDocumentFragment();
+      items.forEach((item) => fragment.appendChild(createChild(item)));
+      container.replaceChildren(fragment);
+    };
+
+    const render = (platform) => {
+      els.image.src = platform.image;
+      els.image.alt = `${platform.title} logo`;
+      els.category.textContent = platform.category;
+      els.visualName.textContent = platform.title;
+      els.headlineMain.textContent = platform.headlineMain;
+      els.headlineItalic.textContent = platform.headlineItalic;
+      els.thesis.textContent = platform.thesis;
+
+      replaceChildren(els.chips, platform.chips, (chip) => {
+        const span = document.createElement('span');
+        span.textContent = chip;
+        return span;
+      });
+
+      replaceChildren(els.readiness, platform.readiness, ([label, copy]) => {
+        const item = document.createElement('div');
+        item.className = 'platform-readiness__item';
+        const strong = document.createElement('strong');
+        strong.textContent = label;
+        const span = document.createElement('span');
+        span.textContent = copy;
+        item.append(strong, span);
+        return item;
+      });
+
+      replaceChildren(els.launch, platform.launch, (launchItem) => {
+        const li = document.createElement('li');
+        li.textContent = launchItem;
+        return li;
+      });
+    };
+
+    const open = (slug, trigger) => {
+      const platform = platformMap.get(slug);
+      if (!platform) return;
+      lastFocus = trigger;
+      render(platform);
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('platform-modal-open');
+      requestAnimationFrame(() => dossier.focus({ preventScroll: true }));
+    };
+
+    const close = (restoreFocus = true) => {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('platform-modal-open');
+      if (restoreFocus && lastFocus) lastFocus.focus({ preventScroll: true });
+    };
+
+    cards.forEach((card) => {
+      card.addEventListener('click', () => open(card.dataset.platform, card));
+    });
+
+    modal.addEventListener('click', (event) => {
+      const closeTarget = event.target.closest('[data-platform-close]');
+      if (!closeTarget) return;
+      close(closeTarget.tagName !== 'A');
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal.classList.contains('is-open')) close();
+    });
+  })();
+</script>

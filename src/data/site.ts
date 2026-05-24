@@ -71,12 +71,12 @@ export type PageData = {
 };
 
 export const contactProfile = {
-  email: 'cabell@worklabs.com',
-  mailto: 'mailto:cabell@worklabs.com',
+  email: 'hello@worklabs.com',
+  mailto: 'mailto:hello@worklabs.com',
   name: 'Cabell Harris',
   phone: '(804) 363-1719',
   phoneHref: 'tel:+18043631719',
-  role: 'Founder & Creative Director, WORK LABS',
+  role: 'Founder & Chief Brand Architect',
   signoff: 'Always Thinking',
 };
 
@@ -85,9 +85,9 @@ export const operatingFormula = 'Home of Collaborative Intelligence™ · (AI²)
 export const navItems: LinkItem[] = [
   { href: '/about', label: 'About' },
   { href: '/ci2', label: 'CI²' },
-  { href: '/portfolio', label: 'Portfolio' },
   { href: '/brand-foundry', label: 'Brand Foundry' },
   { href: '/consulting', label: 'Consulting' },
+  { href: '/work', label: 'Work' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -633,11 +633,131 @@ export const homePathways = [
 ] as const;
 
 export const foundryHeroBrands = [
-  { category: 'Cause-commerce', image: '/images/brand-foundry-examples/save-the-world.jpeg', status: 'Public hero', title: 'Save The World' },
-  { category: 'Experiential', image: '/images/brand-foundry-examples/wine-hunters.jpeg', status: 'Public hero', title: 'Wine Hunters' },
-  { category: 'Retail concept', image: '/images/brand-foundry-examples/poshabilities.jpeg', status: 'Public hero', title: 'Poshabilities' },
-  { category: 'Edutainment', image: '/images/brand-foundry-examples/family-inc.jpeg', status: 'Public hero', title: 'Family Inc.' },
-  { category: 'Consumer brand', image: '/images/brand-foundry-examples/queen-bee.jpeg', status: 'Public hero', title: 'Queen Bee' },
+  {
+    category: 'Cause-commerce',
+    chips: ['Purpose-led commerce', 'Licensing potential', 'Campaign-ready', 'Partnership-friendly'],
+    headlineItalic: 'made tangible.',
+    headlineMain: 'The cause economy,',
+    image: '/images/brand-foundry-examples/save-the-world.jpeg',
+    launch: [
+      'Identity and lockup system',
+      'Founding story and manifesto',
+      'Cause partnership architecture',
+      'Merchandise and product directions',
+      'Campaign territories and launch lines',
+      'Qualified operator briefing package',
+    ],
+    readiness: [
+      ['Strategic frame', 'Category thesis, audience logic, and proof-of-purpose architecture are already defined.'],
+      ['Brand system', 'Name, mark, tone, launch narrative, and campaign language work as one complete platform.'],
+      ['Operator handoff', 'Product pathways, partnership targets, and first-market activation are ready to brief.'],
+    ],
+    slug: 'save-the-world',
+    status: 'Market-ready',
+    thesis:
+      'A cause-commerce platform built around a simple commercial truth: people will support what they can see, share, and carry into the world.',
+    title: 'Save The World',
+  },
+  {
+    category: 'Experiential wine',
+    chips: ['Club-ready', 'Experience-led', 'Content engine', 'Retail extensible'],
+    headlineItalic: 'with a field-guide soul.',
+    headlineMain: 'Wine discovery,',
+    image: '/images/brand-foundry-examples/wine-hunters.jpeg',
+    launch: [
+      'Core identity and expedition language',
+      'Club and membership architecture',
+      'Event and tasting experience concepts',
+      'Editorial and field-guide content system',
+      'Retail and partnership extensions',
+      'First-season activation brief',
+    ],
+    readiness: [
+      ['Strategic frame', 'A clear position in discovery, taste, access, and adventure gives the brand a defensible lane.'],
+      ['Brand system', 'The identity carries from bottles and vehicles to field notes, events, maps, and membership.'],
+      ['Operator handoff', 'Launch paths include wine club, guided trips, retail collaborations, and media programming.'],
+    ],
+    slug: 'wine-hunters',
+    status: 'Operator-ready',
+    thesis:
+      'Wine Hunters turns the search for great bottles into an ownable adventure: part club, part content platform, part tasting engine.',
+    title: 'Wine Hunters',
+  },
+  {
+    category: 'Retail platform',
+    chips: ['Giftable', 'Editorially rich', 'Product-flexible', 'Partnership-ready'],
+    headlineItalic: 'built to become a business.',
+    headlineMain: 'Everyday polish,',
+    image: '/images/brand-foundry-examples/poshabilities.jpeg',
+    launch: [
+      'Brand voice and etiquette-forward point of view',
+      'Launch assortment territories',
+      'Gift, home, beauty, and occasion pathways',
+      'Editorial content and advice pillars',
+      'Retail collaboration targets',
+      'Operator-ready commercialization brief',
+    ],
+    readiness: [
+      ['Strategic frame', 'The platform owns a high-margin territory between taste, manners, gifting, and accessible luxury.'],
+      ['Brand system', 'Name, voice, identity, and product behavior are built to stretch without becoming generic.'],
+      ['Operator handoff', 'Assortment logic, launch collections, content pillars, and collaboration lanes are framed.'],
+    ],
+    slug: 'poshabilities',
+    status: 'Assortment-ready',
+    thesis:
+      'Poshabilities is a modern retail and content platform for taste, social fluency, gifting, and small luxuries.',
+    title: 'Poshabilities',
+  },
+  {
+    category: 'Family systems',
+    chips: ['Curriculum-ready', 'Productizable', 'Media-friendly', 'Licensable'],
+    headlineItalic: 'reimagined as an operating system.',
+    headlineMain: 'The household,',
+    image: '/images/brand-foundry-examples/family-inc.jpeg',
+    launch: [
+      'Core platform story and vocabulary',
+      'Learning module and workshop directions',
+      'Content series and book concepts',
+      'Product, game, and toolkit extensions',
+      'School, sponsor, and family brand partnerships',
+      'Launch roadmap for pilot programming',
+    ],
+    readiness: [
+      ['Strategic frame', 'A strong category idea connects parenting, education, household management, and life skills.'],
+      ['Brand system', 'The identity is playful enough for children and credible enough for parents, schools, and sponsors.'],
+      ['Operator handoff', 'Program modules, content arcs, product ideas, and partnership categories are mapped.'],
+    ],
+    slug: 'family-inc',
+    status: 'Program-ready',
+    thesis:
+      'Family Inc. turns the work of family life into a smart, teachable, and entertaining platform.',
+    title: 'Family Inc.',
+  },
+  {
+    category: 'Consumer IP',
+    chips: ['Iconic mark', 'Category-flexible', 'Community-led', 'Premium potential'],
+    headlineItalic: 'and hive-minded commerce.',
+    headlineMain: 'Authority, wit,',
+    image: '/images/brand-foundry-examples/queen-bee.jpeg',
+    launch: [
+      'Identity and symbol system',
+      'Voice, attitude, and brand story',
+      'Beauty, food, home, and gifting applications',
+      'Community and membership mechanics',
+      'Publishing and content extensions',
+      'Premium partnership and licensing brief',
+    ],
+    readiness: [
+      ['Strategic frame', 'The brand occupies a memorable territory around confidence, influence, taste, and collective momentum.'],
+      ['Brand system', 'Identity, language, and attitude are strong enough to anchor products, content, and membership.'],
+      ['Operator handoff', 'Commercial lanes, audience logic, and first-wave applications are ready for a focused launch.'],
+    ],
+    slug: 'queen-bee',
+    status: 'Brand-ready',
+    thesis:
+      'Queen Bee is consumer IP with immediate symbolic power: leadership, taste, confidence, and community in one mark.',
+    title: 'Queen Bee',
+  },
 ] as const;
 
 export const homeFirsts = [
@@ -751,5 +871,117 @@ export const portfolioStudies = [
     summary:
       'A study in how even smaller brand touchpoints can reinforce a larger strategic point of view.',
     title: 'Big Thinkers',
+  },
+] as const;
+
+export const logoArchive = [
+  ['Bass', '/images/portfolio/logos/logos-bass.jpg'],
+  ['Brinton', '/images/portfolio/logos/logos-brinton.jpg'],
+  ['Charles Luck', '/images/portfolio/logos/logos-charles-luck.jpg'],
+  ['Cobble Stone', '/images/portfolio/logos/logos-cobble-stone.jpg'],
+  ['Daley Collaborations', '/images/portfolio/logos/logos-daley-collaborations.jpg'],
+  ['DieHappy', '/images/portfolio/logos/logos-diehappy.jpg'],
+  ['Dun & Bradstreet', '/images/portfolio/logos/logos-dun-bradstreet.jpg'],
+  ['Elephant Pharm', '/images/portfolio/logos/logos-elephant-pharm.jpg'],
+  ['Fine Fettle', '/images/portfolio/logos/logos-fine-fettle-1.jpg'],
+  ['Hearing First', '/images/portfolio/logos/logos-hearing-first.jpg'],
+  ['Heron', '/images/portfolio/logos/logos-heron.jpg'],
+  ['Journeyman', '/images/portfolio/logos/logos-journeyman-1.jpg'],
+  ['Lot 44', '/images/portfolio/logos/logos-lot-44.jpg'],
+  ['MeadWestvaco', '/images/portfolio/logos/logos-meadewest.jpg'],
+  ["O'My Dairy Free", '/images/portfolio/logos/logos-omy-1.jpg'],
+  ['Advanced Ortho', '/images/portfolio/logos/logos-ortho.jpg'],
+  ['Patriot Title', '/images/portfolio/logos/logos-patriot-title.jpg'],
+  ['Peak Experience', '/images/portfolio/logos/logos-peak-experience.jpg'],
+  ['Pivotal', '/images/portfolio/logos/logos-pivotal.jpg'],
+  ['RHB', '/images/portfolio/logos/logos-rhh.jpg'],
+  ['Richmond Ballet', '/images/portfolio/logos/logos-richmond-ballet.jpg'],
+  ['Rockin Baby', '/images/portfolio/logos/logos-rockin-baby.jpg'],
+  ['Roja Bloom', '/images/portfolio/logos/logos-roja-1.jpg'],
+  ['Smartbox', '/images/portfolio/logos/logos-smartbox.jpg'],
+  ['Smile Pops', '/images/portfolio/logos/logos-smile-pops.jpg'],
+  ['Spurrier', '/images/portfolio/logos/logos-spurrier.jpg'],
+  ['Truth Reels', '/images/portfolio/logos/logos-truth-reels.jpg'],
+  ['Virginia Tobacco Settlement', '/images/portfolio/logos/logos-va-tobacco-settlement.jpg'],
+  ['Virginia Tourism', '/images/portfolio/logos/logos-va-tourism.jpg'],
+  ['Wickwire', '/images/portfolio/logos/logos-wickwire.jpg'],
+] as const;
+
+export const judgeWorkCards = [
+  ['01', 'Damaging', 'Actively works against the brand. Confuses, cheapens, or erodes trust.', 'danger'],
+  ['02', 'Wasteful', 'Uses money and attention without creating memory, meaning, or value.', 'red'],
+  ['03', 'Boring', 'Invisible in market. Technically present, emotionally absent.', 'orange'],
+  ['04', 'Predictable', 'Competent but expected. People understand it and move on.', 'amber'],
+  ['05', 'Competent', 'Clear and professional. Enough to be understood, not enough to be remembered.', 'gold'],
+  ['06', 'Rewarding', 'Noticed and worth the time. The audience feels something in return.', 'lime'],
+  ['07', 'Innovative', 'Fresh thinking with strong execution. It changes the frame of comparison.', 'green'],
+  ['08', 'Market Leader', 'Best in category. It shifts perception and improves market standing.', 'emerald'],
+  ['09', 'World Class', 'Competes with the strongest work globally and sets a benchmark.', 'forest'],
+  ['10', 'World Beating', 'Changes expectations. Culturally influential, commercially powerful, hard to ignore.', 'deep'],
+] as const;
+
+export const consultingTiers = [
+  {
+    duration: 'Single session',
+    investment: 'Fixed scope',
+    number: '01',
+    subtitle: 'A concentrated decision room.',
+    title: 'WORK Session',
+    body:
+      'A focused working session for founders, executives, or leadership teams who need clearer thinking around a consequential brand or business decision.',
+  },
+  {
+    duration: '2 - 4 weeks',
+    investment: 'On inquiry',
+    number: '02',
+    subtitle: 'Find the real problem before solving it.',
+    title: 'Brand Exploratory',
+    body:
+      'A short diagnostic engagement for companies assessing positioning, identity, audience, offer structure, or readiness for a larger brand move.',
+  },
+  {
+    duration: '4 - 8 weeks',
+    investment: 'On inquiry',
+    number: '03',
+    subtitle: 'Applied thinking for high-stakes moves.',
+    title: 'WORK Prism Method™',
+    body:
+      'Targeted consulting for positioning shifts, new offerings, category moves, succession, resets, and growth inflection points.',
+  },
+  {
+    duration: '3 - 12 mo+',
+    investment: 'On inquiry',
+    number: '04',
+    subtitle: 'Ongoing strategic leadership.',
+    title: 'Flex CBA / Retainer',
+    body:
+      'WORK LABS acts as Chief Brand Architect: strategic partner to leadership, guardian of the brand system, and ongoing decision layer.',
+  },
+] as const;
+
+export const contactPaths = [
+  {
+    body: 'For acquirers, operators, and strategic partners interested in brand platforms, public heroes, or deeper inventory.',
+    label: 'Begin Foundry inquiry',
+    number: '01',
+    title: 'Foundry Inquiry',
+  },
+  {
+    body: 'For executives and founders navigating positioning, growth, repositioning, launches, or consequential brand decisions.',
+    label: 'Begin Consulting inquiry',
+    number: '02',
+    title: 'Consulting Inquiry',
+  },
+  {
+    body: 'For licensing, partnership, speaking, press, or strategic opportunities related to Collaborative Intelligence.',
+    label: 'Begin CI² inquiry',
+    number: '03',
+    title: 'CI² Inquiry',
+  },
+  {
+    body: 'For referrals, archive requests, applications, or anything that does not fit cleanly into the other paths.',
+    label: 'Send a general message',
+    number: '04',
+    title: 'General',
   },
 ] as const;

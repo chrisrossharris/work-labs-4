@@ -1,0 +1,59 @@
+---
+import PageFrame from '../components/PageFrame.astro';
+import { logoArchive, portfolioPage, portfolioStudies } from '../data/site';
+---
+
+<PageFrame title="Work | WORK LABS" description={portfolioPage.metaDescription} currentPath="/work" ctaHref="/contact" ctaLabel="Discuss a Project">
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow" data-reveal>The Portfolio</div>
+      <h1 class="page-title" data-reveal>The work has always been<br /><span class="italic muted">the argument.</span></h1>
+      <p class="hero__sub" data-reveal>Selected work from across categories and mediums. Curated as evidence of taste, strategic clarity, and the ability to make ideas visible in the real world.</p>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container">
+      <div class="portfolio-grid">
+        {portfolioStudies.map((study) => (
+          <article class="work-tile" data-reveal>
+            <div class="work-tile__image">
+              <img src={study.image} alt={study.title} loading="lazy" />
+            </div>
+            <div class="work-tile__meta"><strong>{study.title}</strong><span>{study.category}</span></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="container">
+      <div class="split split--end">
+        <div>
+          <div class="eyebrow" data-reveal>Identity</div>
+          <h2 class="section-title" data-reveal>A logo is not a brand.<br /><span class="italic muted">But it is a signal.</span></h2>
+        </div>
+        <p class="lede" data-reveal>It should be simple enough to recognize, strong enough to endure, and flexible enough to live anywhere. These marks were designed to hold their meaning over time.</p>
+      </div>
+      <div class="logo-grid" style="margin-top:72px;">
+        {logoArchive.map(([name, image]) => (
+          <figure class="logo-tile" data-reveal>
+            <div class="logo-tile__image"><img src={image} alt={`${name} logo`} loading="lazy" /></div>
+            <figcaption>{name}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark" style="text-align:center;">
+    <div class="container">
+      <h2 class="section-title" data-reveal style="margin-inline:auto;">Recognized across major industry award shows and built across decades of category work.</h2>
+      <p class="lede" data-reveal style="margin:28px auto 0;">Cannes Lions, The Clio Awards, The One Show, Communication Arts, Art Directors Club, Richmond Ad Club Hall of Fame, and Virginia Communications Hall of Fame.</p>
+      <div class="hero__actions" data-reveal style="justify-content:center;">
+        <a class="btn btn--primary" href="/contact">Start a Conversation</a>
+      </div>
+    </div>
+  </section>
+</PageFrame>

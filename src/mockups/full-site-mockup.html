@@ -306,6 +306,21 @@ h1.display, h2.display {
 }
 .placeholder.light .ph-ratio { color: var(--text-dark-faint); }
 
+.portrait-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.founder-portrait,
+.about-founder-portrait {
+  overflow: hidden;
+  background: #e9e5dc;
+  border: 1px solid var(--line-light);
+}
+
 /* ============================================
    BUTTONS
    ============================================ */
@@ -325,6 +340,8 @@ h1.display, h2.display {
   background: transparent;
   cursor: pointer;
   font-family: 'Panton', sans-serif;
+  appearance: none;
+  -webkit-appearance: none;
 }
 .btn.light-bg {
   border-color: var(--line-light);
@@ -381,6 +398,166 @@ h1.display, h2.display {
 .formula .equals { font-style: normal; color: var(--brass); margin: 0 0.1em; }
 .formula .plus { font-style: normal; color: var(--text-dark-faint); margin: 0 0.12em; }
 .dark .formula .plus, section.dark .formula .plus { color: var(--text-light-faint); }
+
+.formula-kinetic {
+  --formula-glow: rgba(198, 163, 90, 0.34);
+  perspective: 900px;
+  transform-style: preserve-3d;
+}
+.formula-kinetic .term,
+.formula-kinetic .operator {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 0.55em, 44px) rotateX(58deg);
+  filter: blur(8px);
+  transform-origin: 50% 80%;
+}
+.formula-kinetic .term {
+  position: relative;
+  text-shadow: 0 0 0 transparent;
+}
+.formula-kinetic .term::after {
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 0.03em;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--formula-glow), transparent);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.formula-kinetic.is-inview .term,
+.formula-kinetic.is-inview .operator {
+  animation: formulaRise 1.05s cubic-bezier(.16, 1, .3, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+.formula-kinetic.is-inview .term::after {
+  animation: formulaUnderline 1.15s cubic-bezier(.16, 1, .3, 1) forwards;
+  animation-delay: calc(var(--d, 0ms) + 180ms);
+}
+.formula-kinetic.is-inview .operator.equals {
+  animation-name: formulaRise, formulaSignal;
+  animation-duration: 1.05s, 2.6s;
+  animation-delay: var(--d, 0ms), 1.25s;
+  animation-fill-mode: forwards, none;
+  animation-timing-function: cubic-bezier(.16, 1, .3, 1), ease-in-out;
+  animation-iteration-count: 1, infinite;
+}
+.formula-kinetic.is-inview .ci-term {
+  animation-name: formulaRise, ciGlow;
+  animation-duration: 1.05s, 3.4s;
+  animation-delay: var(--d, 0ms), 1.45s;
+  animation-fill-mode: forwards, none;
+  animation-timing-function: cubic-bezier(.16, 1, .3, 1), ease-in-out;
+  animation-iteration-count: 1, infinite;
+}
+
+.kinetic-triangle {
+  overflow: visible;
+  filter: drop-shadow(0 18px 38px rgba(10, 10, 10, 0.16));
+}
+.ci-geometry .kinetic-triangle { filter: drop-shadow(0 18px 42px rgba(198, 163, 90, 0.12)); }
+.tri-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.tri-line-ci {
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 10px rgba(198, 163, 90, 0.24));
+}
+.tri-label,
+.tri-node {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.tri-node {
+  fill: var(--brass);
+  stroke: rgba(255,255,255,0.7);
+  stroke-width: 1;
+}
+.triangle-figure.is-inview .tri-line,
+.ci-triangle.is-inview .tri-line {
+  animation: drawTriangle 1.35s cubic-bezier(.65, 0, .35, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+.triangle-figure.is-inview .tri-label,
+.ci-triangle.is-inview .tri-label {
+  animation: triangleLabelIn 0.8s cubic-bezier(.16, 1, .3, 1) forwards;
+  animation-delay: var(--d, 900ms);
+}
+.triangle-figure.is-inview .tri-node,
+.ci-triangle.is-inview .tri-node {
+  animation: triangleNodeIn 0.75s cubic-bezier(.16, 1, .3, 1) forwards, triangleNodePulse 2.8s ease-in-out infinite;
+  animation-delay: var(--d, 900ms), calc(var(--d, 900ms) + 900ms);
+}
+.triangle-figure.is-inview .tri-line-ci,
+.ci-triangle.is-inview .tri-line-ci {
+  animation-name: drawTriangle, triangleCurrent;
+  animation-duration: 1.35s, 3.2s;
+  animation-delay: var(--d, 0ms), 1.5s;
+  animation-fill-mode: forwards, none;
+  animation-timing-function: cubic-bezier(.65, 0, .35, 1), ease-in-out;
+  animation-iteration-count: 1, infinite;
+}
+
+@keyframes formulaRise {
+  0% { opacity: 0; transform: translate3d(0, 0.55em, 44px) rotateX(58deg); filter: blur(8px); }
+  62% { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) rotateX(0deg); filter: blur(0); }
+}
+@keyframes formulaUnderline {
+  0% { opacity: 0; transform: scaleX(0); }
+  45% { opacity: 1; }
+  100% { opacity: 0; transform: scaleX(1); }
+}
+@keyframes formulaSignal {
+  0%, 100% { color: var(--brass); text-shadow: 0 0 0 rgba(198, 163, 90, 0); }
+  50% { color: #e1c577; text-shadow: 0 0 22px rgba(198, 163, 90, 0.48); }
+}
+@keyframes ciGlow {
+  0%, 100% { text-shadow: 0 0 0 rgba(198, 163, 90, 0); }
+  50% { text-shadow: 0 0 30px rgba(198, 163, 90, 0.36); }
+}
+@keyframes drawTriangle {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes triangleCurrent {
+  0%, 100% { stroke: #c6a35a; filter: drop-shadow(0 0 6px rgba(198, 163, 90, 0.22)); }
+  50% { stroke: #ead28d; filter: drop-shadow(0 0 18px rgba(198, 163, 90, 0.62)); }
+}
+@keyframes triangleLabelIn {
+  0% { opacity: 0; transform: translateY(10px) scale(0.94); filter: blur(4px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes triangleNodeIn {
+  0% { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes triangleNodePulse {
+  0%, 100% { transform: scale(1); opacity: 0.78; }
+  50% { transform: scale(1.45); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .formula-kinetic .term,
+  .formula-kinetic .operator,
+  .tri-label,
+  .tri-node {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none !important;
+  }
+  .tri-line {
+    stroke-dashoffset: 0;
+    animation: none !important;
+  }
+}
 
 /* ============================================
    RESPONSIVE
@@ -781,10 +958,20 @@ h1.display, h2.display {
   cursor: pointer;
   transition: all 0.3s;
   position: relative;
+  width: 100%;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  appearance: none;
+  -webkit-appearance: none;
 }
-.brand-tile:hover {
+.brand-tile:hover,
+.brand-tile:focus-visible {
   border-color: var(--brass);
   background: var(--black-3);
+  transform: translateY(-4px);
+  box-shadow: 0 26px 60px rgba(0,0,0,0.32);
+  outline: none;
 }
 .brand-tile .brand-mark {
   flex: 1;
@@ -819,6 +1006,372 @@ h1.display, h2.display {
   font-style: italic;
   font-size: 11px;
   color: var(--brass);
+}
+.brand-tile.image-tile {
+  padding: 0;
+  overflow: hidden;
+  background: #111;
+}
+.brand-tile.image-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0) 28%, rgba(10,10,10,0.1) 50%, rgba(10,10,10,0.92) 82%);
+  pointer-events: none;
+}
+.brand-tile.image-tile .ci-stamp {
+  top: 24px;
+  left: 24px;
+  right: auto;
+  z-index: 3;
+  color: rgba(10,10,10,0.18);
+}
+.brand-art {
+  position: absolute;
+  inset: 0;
+  padding: 58px 38px 118px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #f4f1ea 0%, #eeebe5 48%, #8f8d88 68%, #111 100%);
+}
+.brand-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: grayscale(1) contrast(1.08);
+  mix-blend-mode: multiply;
+}
+.brand-name {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 50px;
+  z-index: 2;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: clamp(30px, 2.8vw, 48px);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--text-light);
+}
+.brand-tile.image-tile .tile-meta {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 20px;
+  z-index: 2;
+  margin-top: 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.45);
+}
+
+/* Brand platform dossier */
+.platform-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.platform-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.platform-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background:
+    radial-gradient(circle at 28% 22%, rgba(198, 163, 90, 0.16), transparent 34%),
+    rgba(5,5,5,0.78);
+  backdrop-filter: blur(14px);
+  cursor: pointer;
+}
+.platform-dossier {
+  position: relative;
+  width: min(1180px, 100%);
+  max-height: min(860px, calc(100vh - 56px));
+  overflow: auto;
+  background: #f5f1e8;
+  color: var(--text-dark);
+  border: 1px solid rgba(198, 163, 90, 0.42);
+  box-shadow: 0 42px 110px rgba(0,0,0,0.56);
+  transform: translateY(24px) scale(0.975);
+  transition: transform 0.42s cubic-bezier(.16, 1, .3, 1);
+}
+.platform-modal.is-open .platform-dossier { transform: translateY(0) scale(1); }
+.platform-dossier::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(198,163,90,0.12), transparent 18%, transparent 82%, rgba(10,10,10,0.05)),
+    repeating-linear-gradient(90deg, transparent 0 119px, rgba(10,10,10,0.035) 119px 120px);
+  mix-blend-mode: multiply;
+}
+.platform-dossier__close {
+  position: sticky;
+  top: 18px;
+  left: calc(100% - 64px);
+  z-index: 4;
+  width: 44px;
+  height: 44px;
+  margin: 18px 18px -62px auto;
+  border: 1px solid rgba(10,10,10,0.18);
+  background: rgba(245,241,232,0.84);
+  color: var(--text-dark);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+.platform-dossier__close:hover,
+.platform-dossier__close:focus-visible {
+  background: var(--black);
+  border-color: var(--black);
+  color: var(--text-light);
+  outline: none;
+}
+.platform-dossier__grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
+  min-height: 720px;
+}
+.platform-dossier__visual {
+  padding: 64px 48px;
+  background: linear-gradient(180deg, #efebe2, #d5cec0 62%, #151515 100%);
+  border-right: 1px solid rgba(10,10,10,0.14);
+  display: grid;
+  grid-template-rows: auto minmax(280px, 1fr) auto;
+  gap: 36px;
+}
+.platform-dossier__stamp {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(10,10,10,0.52);
+}
+.platform-dossier__mark {
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: rgba(255,255,255,0.56);
+  border: 1px solid rgba(10,10,10,0.08);
+  align-self: center;
+}
+.platform-dossier__mark img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  display: block;
+  filter: grayscale(1) contrast(1.08);
+  mix-blend-mode: multiply;
+}
+.platform-dossier__meta {
+  color: var(--text-light);
+}
+.platform-dossier__meta .label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+.platform-dossier__meta h3 {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: clamp(42px, 5vw, 72px);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+}
+.platform-dossier__content {
+  padding: 72px 68px 64px;
+}
+.platform-dossier__eyebrow {
+  margin-bottom: 28px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--brass-dim);
+}
+.platform-dossier__content h2 {
+  max-width: 720px;
+  font-family: 'Panton', sans-serif;
+  font-size: clamp(38px, 4.6vw, 68px);
+  font-weight: 700;
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+}
+.platform-dossier__content h2 .italic {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--brass-dim);
+}
+.platform-dossier__thesis {
+  max-width: 690px;
+  margin-top: 34px;
+  font-size: 18px;
+  line-height: 1.58;
+  color: var(--text-dark-dim);
+}
+.platform-dossier__chips {
+  margin-top: 34px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.platform-dossier__chips span {
+  border: 1px solid rgba(10,10,10,0.16);
+  background: rgba(255,255,255,0.46);
+  padding: 9px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dark-dim);
+}
+.platform-readiness {
+  margin-top: 52px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(10,10,10,0.16);
+  border-bottom: 1px solid rgba(10,10,10,0.16);
+}
+.platform-readiness__item {
+  padding: 24px 22px 24px 0;
+  border-right: 1px solid rgba(10,10,10,0.12);
+}
+.platform-readiness__item:last-child { border-right: 0; padding-right: 0; padding-left: 22px; }
+.platform-readiness__item:nth-child(2) { padding-left: 22px; }
+.platform-readiness__item strong {
+  display: block;
+  margin-bottom: 10px;
+  font-family: 'Panton', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.platform-readiness__item span {
+  display: block;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text-dark-dim);
+}
+.platform-launch {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: minmax(190px, 0.75fr) minmax(0, 1.25fr);
+  gap: 36px;
+}
+.platform-launch h4 {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 1.05;
+  color: var(--brass-dim);
+}
+.platform-launch ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.platform-launch li {
+  position: relative;
+  min-height: 74px;
+  padding: 14px 14px 14px 34px;
+  background: rgba(255,255,255,0.52);
+  border: 1px solid rgba(10,10,10,0.1);
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--text-dark-dim);
+}
+.platform-launch li::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 14px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brass);
+}
+.platform-dossier__footer {
+  margin-top: 48px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+.platform-dossier__footer .btn {
+  color: var(--text-dark);
+  border-color: rgba(10,10,10,0.24);
+}
+.platform-dossier__footer .btn.primary {
+  background: var(--black);
+  border-color: var(--black);
+  color: var(--text-light);
+}
+.platform-dossier__note {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  color: var(--text-dark-faint);
+  font-size: 15px;
+}
+body.platform-modal-open { overflow: hidden; }
+
+@media (max-width: 980px) {
+  .platform-modal { padding: 18px; }
+  .platform-dossier { max-height: calc(100vh - 36px); }
+  .platform-dossier__grid { grid-template-columns: 1fr; min-height: 0; }
+  .platform-dossier__visual {
+    min-height: 520px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(10,10,10,0.14);
+  }
+  .platform-dossier__content { padding: 56px 40px 48px; }
+  .platform-launch { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .platform-modal { padding: 0; }
+  .platform-dossier { width: 100%; max-height: 100vh; min-height: 100vh; }
+  .platform-dossier__close { top: 12px; margin-top: 12px; margin-right: 12px; }
+  .platform-dossier__visual { min-height: 420px; padding: 48px 24px 36px; }
+  .platform-dossier__mark { min-height: 260px; }
+  .platform-dossier__content { padding: 44px 24px 40px; }
+  .platform-readiness { grid-template-columns: 1fr; }
+  .platform-readiness__item,
+  .platform-readiness__item:nth-child(2),
+  .platform-readiness__item:last-child {
+    padding: 20px 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(10,10,10,0.12);
+  }
+  .platform-readiness__item:last-child { border-bottom: 0; }
+  .platform-launch ul { grid-template-columns: 1fr; }
 }
 
 /* Founder strip */
@@ -1235,6 +1788,86 @@ h1.display, h2.display {
   color: var(--text-light-dim);
 }
 
+/* How to judge work */
+.about-judge-work {
+  background: var(--off-white);
+  color: var(--text-dark);
+  padding: 170px 60px;
+  border-top: 1px solid var(--line-light);
+  border-bottom: 1px solid var(--line-light);
+}
+.about-judge-work-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.about-judge-work h2 {
+  font-family: 'Panton', sans-serif;
+  font-size: clamp(44px, 7vw, 92px);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  max-width: 780px;
+}
+.about-judge-work .judge-kicker {
+  margin-top: 28px;
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(26px, 3.2vw, 48px);
+  line-height: 1.05;
+  color: var(--brass-dim);
+  max-width: 760px;
+}
+.judge-work-grid {
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+.judge-work-card {
+  min-height: 380px;
+  padding: 30px 22px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
+  color: #fffaf2;
+}
+.judge-work-card-score {
+  font-family: 'Panton', sans-serif;
+  font-size: clamp(58px, 5vw, 86px);
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+}
+.judge-work-card-label {
+  margin-top: 24px;
+  font-family: 'Panton', sans-serif;
+  font-size: clamp(22px, 1.7vw, 30px);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.judge-work-card-copy {
+  margin-top: 22px;
+  max-width: 23ch;
+  font-size: 13px;
+  line-height: 1.35;
+}
+.judge-work-card-damaging { background: #b11d27; }
+.judge-work-card-wasteful { background: #be2328; }
+.judge-work-card-boring { background: #ff1723; }
+.judge-work-card-predictable { background: #ff1621; }
+.judge-work-card-competent { background: #ff531e; }
+.judge-work-card-rewarding { background: #ff7a1d; }
+.judge-work-card-innovative { background: #ffc31a; color: #15120d; }
+.judge-work-card-market-leader { background: #a7d52c; color: #15120d; }
+.judge-work-card-world-class { background: #19a746; }
+.judge-work-card-world-beating { background: #076f36; }
+
 /* CTA closer for About */
 .about-closer {
   background: var(--black);
@@ -1266,16 +1899,19 @@ h1.display, h2.display {
 
 @media (max-width: 1100px) {
   .about-hero { padding: 100px 32px 80px; }
-  .about-studio, .about-lineage, .about-founder, .about-built, .about-closer { padding-left: 32px; padding-right: 32px; }
+  .about-studio, .about-lineage, .about-founder, .about-built, .about-judge-work, .about-closer { padding-left: 32px; padding-right: 32px; }
   .about-studio-grid, .about-lineage-header, .about-founder-grid { grid-template-columns: 1fr; gap: 40px; }
   .about-built-grid { grid-template-columns: 1fr; }
+  .judge-work-grid { grid-template-columns: repeat(2, 1fr); }
   .about-founder-portrait { aspect-ratio: 16/10; }
 }
 @media (max-width: 700px) {
   .about-hero { padding: 80px 20px 60px; }
-  .about-studio, .about-lineage, .about-founder, .about-built, .about-closer { padding-left: 20px; padding-right: 20px; padding-top: 100px; padding-bottom: 100px; }
+  .about-studio, .about-lineage, .about-founder, .about-built, .about-judge-work, .about-closer { padding-left: 20px; padding-right: 20px; padding-top: 100px; padding-bottom: 100px; }
   .about-timeline { grid-template-columns: 80px 1fr; }
   .about-timeline .tl-tag { display: none; }
+  .judge-work-grid { grid-template-columns: 1fr; }
+  .judge-work-card { min-height: 280px; }
   .about-closer-ctas { flex-direction: column; }
 }
 
@@ -2379,8 +3015,20 @@ h1.display, h2.display {
   background: var(--black-2);
   border: 1px solid var(--line-dark);
   margin-bottom: 16px;
+  overflow: hidden;
 }
 .work-tile.wide .thumb { aspect-ratio: 16/10; }
+.work-tile .thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.45s ease, opacity 0.45s ease;
+}
+.work-tile:hover .thumb img {
+  transform: scale(1.035);
+  opacity: 0.88;
+}
 .work-tile .tile-label {
   display: flex;
   justify-content: space-between;
@@ -2427,23 +3075,44 @@ h1.display, h2.display {
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
 .logo-tile {
-  aspect-ratio: 1/1;
-  background: var(--white);
+  background: #fff;
   border: 1px solid var(--line-light);
+  font-family: 'Newsreader', serif;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.logo-tile:hover {
+  border-color: var(--brass-dim);
+  transform: translateY(-3px);
+}
+.logo-art {
+  aspect-ratio: 4/3;
+  background: #f8f6f0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Newsreader', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: 18px;
-  color: var(--text-dark-faint);
-  text-align: center;
-  padding: 16px;
+  overflow: hidden;
+}
+.logo-tile img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+.logo-tile figcaption {
+  min-height: 56px;
+  padding: 14px 16px 16px;
+  border-top: 1px solid var(--line-light);
+  font-family: 'Panton', system-ui, sans-serif;
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dark-dim);
 }
 
 .work-recognition {
@@ -2775,20 +3444,23 @@ html { scroll-behavior: smooth; }
 
 <section class="home-formula">
   <div class="eyebrow brass-dim">The Operating System</div>
-  <div class="formula formula-big">
-    (AI<sup>2</sup>)<span class="plus">+</span>(HI<sup>2</sup>)<span class="equals">=</span>(CI<sup>2</sup>)
+  <div class="formula formula-big formula-kinetic">
+    <span class="term" style="--d: 0ms;">(AI<sup>2</sup>)</span><span class="operator plus" style="--d: 140ms;">+</span><span class="term" style="--d: 280ms;">(HI<sup>2</sup>)</span><span class="operator equals" style="--d: 430ms;">=</span><span class="term ci-term" style="--d: 580ms;">(CI<sup>2</sup>)</span>
   </div>
   <div class="home-formula-caption">
     <strong>Collaborative Intelligence™</strong> — <span class="brass">the spine</span> that runs through every brand we build, every system we design, and every decision we help our clients make.
   </div>
   <div class="triangle-figure">
-    <svg width="280" height="200" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
-      <line x1="40" y1="160" x2="240" y2="160" stroke="#0a0a0a" stroke-width="1"/>
-      <line x1="40" y1="160" x2="40" y2="40" stroke="#0a0a0a" stroke-width="1"/>
-      <line x1="40" y1="40" x2="240" y2="160" stroke="#c6a35a" stroke-width="1.5"/>
-      <text x="20" y="105" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="18" fill="#0a0a0a" text-anchor="end">HI</text>
-      <text x="140" y="180" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="18" fill="#0a0a0a" text-anchor="middle">AI</text>
-      <text x="155" y="92" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="18" fill="#c6a35a" text-anchor="middle">CI</text>
+    <svg class="kinetic-triangle" width="280" height="200" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+      <line class="tri-line" style="--d: 0ms;" pathLength="1" x1="40" y1="160" x2="240" y2="160" stroke="#0a0a0a" stroke-width="1"/>
+      <line class="tri-line" style="--d: 180ms;" pathLength="1" x1="40" y1="160" x2="40" y2="40" stroke="#0a0a0a" stroke-width="1"/>
+      <line class="tri-line tri-line-ci" style="--d: 360ms;" pathLength="1" x1="40" y1="40" x2="240" y2="160" stroke="#c6a35a" stroke-width="1.5"/>
+      <circle class="tri-node" style="--d: 740ms;" cx="40" cy="160" r="4"/>
+      <circle class="tri-node" style="--d: 860ms;" cx="40" cy="40" r="4"/>
+      <circle class="tri-node" style="--d: 980ms;" cx="240" cy="160" r="4"/>
+      <text class="tri-label" style="--d: 900ms;" x="20" y="105" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="18" fill="#0a0a0a" text-anchor="end">HI</text>
+      <text class="tri-label" style="--d: 1040ms;" x="140" y="180" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="18" fill="#0a0a0a" text-anchor="middle">AI</text>
+      <text class="tri-label" style="--d: 1180ms;" x="155" y="92" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="18" fill="#c6a35a" text-anchor="middle">CI</text>
     </svg>
   </div>
 </section>
@@ -2868,42 +3540,43 @@ html { scroll-behavior: smooth; }
     </div>
   </div>
   <div class="foundry-grid">
-    <div class="brand-tile">
+    <button type="button" class="brand-tile image-tile" data-platform="save-the-world" aria-label="Open Save The World platform dossier">
       <div class="ci-stamp">CI²</div>
-      <div class="brand-mark">Save<br>The<br>World</div>
-      <div class="tile-meta"><span>Cause-commerce</span><span class="status">Available</span></div>
-    </div>
-    <div class="brand-tile">
+      <div class="brand-art"><img src="/images/brand-foundry-examples/save-the-world.jpeg" alt="Save The World logo"></div>
+      <div class="brand-name">Save The<br>World</div>
+      <div class="tile-meta"><span>Cause-commerce</span><span class="status">Market-ready</span></div>
+    </button>
+    <button type="button" class="brand-tile image-tile" data-platform="wine-hunters" aria-label="Open Wine Hunters platform dossier">
       <div class="ci-stamp">CI²</div>
-      <div class="brand-mark">Wine<br>Hunters</div>
-      <div class="tile-meta"><span>Experiential</span><span class="status">Available</span></div>
-    </div>
-    <div class="brand-tile">
+      <div class="brand-art"><img src="/images/brand-foundry-examples/wine-hunters.jpeg" alt="Wine Hunters logo"></div>
+      <div class="brand-name">Wine Hunters</div>
+      <div class="tile-meta"><span>Experiential</span><span class="status">Operator-ready</span></div>
+    </button>
+    <button type="button" class="brand-tile image-tile" data-platform="poshabilities" aria-label="Open Poshabilities platform dossier">
       <div class="ci-stamp">CI²</div>
-      <div class="brand-mark">Thnk:</div>
-      <div class="tile-meta"><span>Wellness</span><span class="status">Gated</span></div>
-    </div>
-    <div class="brand-tile">
+      <div class="brand-art"><img src="/images/brand-foundry-examples/poshabilities.jpeg" alt="Poshabilities logo"></div>
+      <div class="brand-name">Poshabilities</div>
+      <div class="tile-meta"><span>Retail platform</span><span class="status">Assortment-ready</span></div>
+    </button>
+    <button type="button" class="brand-tile image-tile" data-platform="family-inc" aria-label="Open Family Inc. platform dossier">
       <div class="ci-stamp">CI²</div>
-      <div class="brand-mark">Family<br>Inc.</div>
-      <div class="tile-meta"><span>Edutainment</span><span class="status">Available</span></div>
-    </div>
-    <div class="brand-tile">
+      <div class="brand-art"><img src="/images/brand-foundry-examples/family-inc.jpeg" alt="Family Inc. logo"></div>
+      <div class="brand-name">Family Inc.</div>
+      <div class="tile-meta"><span>Family systems</span><span class="status">Program-ready</span></div>
+    </button>
+    <button type="button" class="brand-tile image-tile" data-platform="queen-bee" aria-label="Open Queen Bee platform dossier">
       <div class="ci-stamp">CI²</div>
-      <div class="brand-mark">Thrive</div>
-      <div class="tile-meta"><span>Education</span><span class="status">Available</span></div>
-    </div>
+      <div class="brand-art"><img src="/images/brand-foundry-examples/queen-bee.jpeg" alt="Queen Bee logo"></div>
+      <div class="brand-name">Queen Bee</div>
+      <div class="tile-meta"><span>Consumer IP</span><span class="status">Brand-ready</span></div>
+    </button>
   </div>
 </section>
 
 <section class="home-founder">
   <div class="founder-grid">
     <div class="founder-portrait">
-      <div class="placeholder light">
-        <div class="ph-label">Founder Portrait</div>
-        <div class="ph-desc">Cabell Harris — environmental, considered, black & white. Studio context preferred.</div>
-        <div class="ph-ratio">4:5 · vertical</div>
-      </div>
+      <img class="portrait-image" src="/images/founder/cabell-harris.png" alt="Cabell Harris">
     </div>
     <div class="founder-content">
       <div class="eyebrow brass-dim">The Architect</div>
@@ -3012,11 +3685,7 @@ html { scroll-behavior: smooth; }
 <section class="about-founder">
   <div class="about-founder-grid">
     <div class="about-founder-portrait">
-      <div class="placeholder light">
-        <div class="ph-label">Founder Portrait</div>
-        <div class="ph-desc">Cabell Harris — environmental, considered, black & white. Studio context preferred.</div>
-        <div class="ph-ratio">4:5 · vertical</div>
-      </div>
+      <img class="portrait-image" src="/images/founder/cabell-harris.png" alt="Cabell Harris">
     </div>
     <div>
       <div class="eyebrow brass-dim">The Architect</div>
@@ -3066,6 +3735,66 @@ html { scroll-behavior: smooth; }
   </div>
 </section>
 
+<section class="about-judge-work">
+  <div class="about-judge-work-content">
+    <div class="eyebrow brass-dim">How To Judge Work</div>
+    <h2>How To Judge Work</h2>
+    <p class="judge-kicker">If you can't outspend the competition, you must outthink them.</p>
+    <div class="judge-work-grid">
+      <article class="judge-work-card judge-work-card-damaging">
+        <div class="judge-work-card-score">01</div>
+        <h3 class="judge-work-card-label">Damaging</h3>
+        <p class="judge-work-card-copy">This work is worse than a waste of time. It harms the brand. You would be better off not running it at all.</p>
+      </article>
+      <article class="judge-work-card judge-work-card-wasteful">
+        <div class="judge-work-card-score">02</div>
+        <h3 class="judge-work-card-label">Wasteful</h3>
+        <p class="judge-work-card-copy">This work wastes time and money. People will actively avoid it. Both the client's resources and your own have been misused.</p>
+      </article>
+      <article class="judge-work-card judge-work-card-boring">
+        <div class="judge-work-card-score">03</div>
+        <h3 class="judge-work-card-label">Boring</h3>
+        <p class="judge-work-card-copy">Both the idea and execution are ordinary. The customer tunes out before it is finished.</p>
+      </article>
+      <article class="judge-work-card judge-work-card-predictable">
+        <div class="judge-work-card-score">04</div>
+        <h3 class="judge-work-card-label">Predictable</h3>
+        <p class="judge-work-card-copy">Well executed, but bland. People have seen it before and move on quickly.</p>
+      </article>
+      <article class="judge-work-card judge-work-card-competent">
+        <div class="judge-work-card-score">05</div>
+        <h3 class="judge-work-card-label">Competent</h3>
+        <p class="judge-work-card-copy">The idea is told clearly and professionally. People will give you enough time to hear the message.</p>
+      </article>
+      <article class="judge-work-card judge-work-card-rewarding">
+        <div class="judge-work-card-score">06</div>
+        <h3 class="judge-work-card-label">Rewarding</h3>
+        <p class="judge-work-card-copy">This work gets noticed. People feel rewarded for spending time with it. Its impact lasts longer than the message itself.</p>
+      </article>
+      <article class="judge-work-card judge-work-card-innovative">
+        <div class="judge-work-card-score">07</div>
+        <h3 class="judge-work-card-label">Innovative</h3>
+        <p class="judge-work-card-copy">Fresh thinking with strong execution. It stands out in its category and encourages repeat engagement.</p>
+      </article>
+      <article class="judge-work-card judge-work-card-market-leader">
+        <div class="judge-work-card-score">08</div>
+        <h3 class="judge-work-card-label">Market Leader</h3>
+        <p class="judge-work-card-copy">Best in its category. It shifts perception and influences how people view the brand and improves its reputation in the market.</p>
+      </article>
+      <article class="judge-work-card judge-work-card-world-class">
+        <div class="judge-work-card-score">09</div>
+        <h3 class="judge-work-card-label">World Class</h3>
+        <p class="judge-work-card-copy">Competes with the very best work globally. It elevates the brand and sets a benchmark that others aim to match.</p>
+      </article>
+      <article class="judge-work-card judge-work-card-world-beating">
+        <div class="judge-work-card-score">10</div>
+        <h3 class="judge-work-card-label">World Beating</h3>
+        <p class="judge-work-card-copy">Sets a new standard in communications. Highly engaging and culturally influential. It changes expectations and is talked about around the world.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
 <section class="about-closer">
   <div class="about-closer-content">
     <div class="eyebrow brass">What's Next</div>
@@ -3103,8 +3832,8 @@ html { scroll-behavior: smooth; }
 <section class="ci-hero">
   <div class="ci-hero-content">
     <div class="eyebrow">The Operating System</div>
-    <div class="formula-hero">
-      (AI<sup>2</sup>)<span class="plus">+</span>(HI<sup>2</sup>)<span class="equals">=</span>(CI<sup>2</sup>)
+    <div class="formula-hero formula-kinetic">
+      <span class="term" style="--d: 0ms;">(AI<sup>2</sup>)</span><span class="operator plus" style="--d: 140ms;">+</span><span class="term" style="--d: 280ms;">(HI<sup>2</sup>)</span><span class="operator equals" style="--d: 430ms;">=</span><span class="term ci-term" style="--d: 580ms;">(CI<sup>2</sup>)</span>
     </div>
     <div class="tagline">Collaborative Intelligence™</div>
     <div class="smarter">Smarter, together.</div>
@@ -3148,13 +3877,16 @@ html { scroll-behavior: smooth; }
   </div>
 
   <div class="ci-triangle">
-    <svg width="380" height="280" viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg">
-      <line x1="60" y1="220" x2="320" y2="220" stroke="#f5f3ee" stroke-width="1"/>
-      <line x1="60" y1="220" x2="60" y2="60" stroke="#f5f3ee" stroke-width="1"/>
-      <line x1="60" y1="60" x2="320" y2="220" stroke="#c6a35a" stroke-width="2"/>
-      <text x="36" y="148" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="22" fill="#f5f3ee" text-anchor="end">HI</text>
-      <text x="190" y="252" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="22" fill="#f5f3ee" text-anchor="middle">AI</text>
-      <text x="210" y="124" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="22" fill="#c6a35a" text-anchor="middle">CI</text>
+    <svg class="kinetic-triangle" width="380" height="280" viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg">
+      <line class="tri-line" style="--d: 0ms;" pathLength="1" x1="60" y1="220" x2="320" y2="220" stroke="#f5f3ee" stroke-width="1"/>
+      <line class="tri-line" style="--d: 180ms;" pathLength="1" x1="60" y1="220" x2="60" y2="60" stroke="#f5f3ee" stroke-width="1"/>
+      <line class="tri-line tri-line-ci" style="--d: 360ms;" pathLength="1" x1="60" y1="60" x2="320" y2="220" stroke="#c6a35a" stroke-width="2"/>
+      <circle class="tri-node" style="--d: 740ms;" cx="60" cy="220" r="5"/>
+      <circle class="tri-node" style="--d: 860ms;" cx="60" cy="60" r="5"/>
+      <circle class="tri-node" style="--d: 980ms;" cx="320" cy="220" r="5"/>
+      <text class="tri-label" style="--d: 900ms;" x="36" y="148" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="22" fill="#f5f3ee" text-anchor="end">HI</text>
+      <text class="tri-label" style="--d: 1040ms;" x="190" y="252" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="22" fill="#f5f3ee" text-anchor="middle">AI</text>
+      <text class="tri-label" style="--d: 1180ms;" x="210" y="124" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="22" fill="#c6a35a" text-anchor="middle">CI</text>
     </svg>
   </div>
 
@@ -3303,31 +4035,36 @@ html { scroll-behavior: smooth; }
     <h2>Five platforms. Five categories. <span class="italic">One operating system.</span></h2>
   </div>
   <div class="foundry-inv-grid">
-    <div class="brand-tile">
+    <button type="button" class="brand-tile image-tile" data-platform="save-the-world" aria-label="Open Save The World platform dossier">
       <div class="ci-stamp">CI²</div>
-      <div class="brand-mark">Save<br>The<br>World</div>
-      <div class="tile-meta"><span>Cause-commerce</span><span class="status">Available</span></div>
-    </div>
-    <div class="brand-tile">
+      <div class="brand-art"><img src="/images/brand-foundry-examples/save-the-world.jpeg" alt="Save The World logo"></div>
+      <div class="brand-name">Save The<br>World</div>
+      <div class="tile-meta"><span>Cause-commerce</span><span class="status">Market-ready</span></div>
+    </button>
+    <button type="button" class="brand-tile image-tile" data-platform="wine-hunters" aria-label="Open Wine Hunters platform dossier">
       <div class="ci-stamp">CI²</div>
-      <div class="brand-mark">Wine<br>Hunters</div>
-      <div class="tile-meta"><span>Experiential</span><span class="status">Available</span></div>
-    </div>
-    <div class="brand-tile">
+      <div class="brand-art"><img src="/images/brand-foundry-examples/wine-hunters.jpeg" alt="Wine Hunters logo"></div>
+      <div class="brand-name">Wine Hunters</div>
+      <div class="tile-meta"><span>Experiential</span><span class="status">Operator-ready</span></div>
+    </button>
+    <button type="button" class="brand-tile image-tile" data-platform="poshabilities" aria-label="Open Poshabilities platform dossier">
       <div class="ci-stamp">CI²</div>
-      <div class="brand-mark">Thnk:</div>
-      <div class="tile-meta"><span>Wellness</span><span class="status">Gated</span></div>
-    </div>
-    <div class="brand-tile">
+      <div class="brand-art"><img src="/images/brand-foundry-examples/poshabilities.jpeg" alt="Poshabilities logo"></div>
+      <div class="brand-name">Poshabilities</div>
+      <div class="tile-meta"><span>Retail platform</span><span class="status">Assortment-ready</span></div>
+    </button>
+    <button type="button" class="brand-tile image-tile" data-platform="family-inc" aria-label="Open Family Inc. platform dossier">
       <div class="ci-stamp">CI²</div>
-      <div class="brand-mark">Family<br>Inc.</div>
-      <div class="tile-meta"><span>Edutainment</span><span class="status">Available</span></div>
-    </div>
-    <div class="brand-tile">
+      <div class="brand-art"><img src="/images/brand-foundry-examples/family-inc.jpeg" alt="Family Inc. logo"></div>
+      <div class="brand-name">Family Inc.</div>
+      <div class="tile-meta"><span>Family systems</span><span class="status">Program-ready</span></div>
+    </button>
+    <button type="button" class="brand-tile image-tile" data-platform="queen-bee" aria-label="Open Queen Bee platform dossier">
       <div class="ci-stamp">CI²</div>
-      <div class="brand-mark">Thrive</div>
-      <div class="tile-meta"><span>Education</span><span class="status">Available</span></div>
-    </div>
+      <div class="brand-art"><img src="/images/brand-foundry-examples/queen-bee.jpeg" alt="Queen Bee logo"></div>
+      <div class="brand-name">Queen Bee</div>
+      <div class="tile-meta"><span>Consumer IP</span><span class="status">Brand-ready</span></div>
+    </button>
   </div>
   <div class="foundry-inv-note">Detailed briefs for each platform are available on request, subject to qualified inquiry.</div>
 </section>
@@ -3566,15 +4303,12 @@ html { scroll-behavior: smooth; }
 
 <section class="work-portfolio">
   <div class="work-grid">
-    <div class="work-tile"><div class="thumb"><div class="placeholder"><div class="ph-label">Brand Identity</div><div class="ph-desc">Studio work — selected portfolio</div></div></div><div class="tile-label"><span class="name">Project Name</span><span class="year">2024</span></div></div>
-    <div class="work-tile"><div class="thumb"><div class="placeholder"><div class="ph-label">Campaign</div><div class="ph-desc">Studio work — selected portfolio</div></div></div><div class="tile-label"><span class="name">Project Name</span><span class="year">2023</span></div></div>
-    <div class="work-tile"><div class="thumb"><div class="placeholder"><div class="ph-label">Packaging</div><div class="ph-desc">Studio work — selected portfolio</div></div></div><div class="tile-label"><span class="name">Project Name</span><span class="year">2023</span></div></div>
-    <div class="work-tile"><div class="thumb"><div class="placeholder"><div class="ph-label">Brand System</div><div class="ph-desc">Studio work — selected portfolio</div></div></div><div class="tile-label"><span class="name">Project Name</span><span class="year">2022</span></div></div>
-    <div class="work-tile"><div class="thumb"><div class="placeholder"><div class="ph-label">Identity</div><div class="ph-desc">Studio work — selected portfolio</div></div></div><div class="tile-label"><span class="name">Project Name</span><span class="year">2022</span></div></div>
-    <div class="work-tile"><div class="thumb"><div class="placeholder"><div class="ph-label">Repositioning</div><div class="ph-desc">Studio work — selected portfolio</div></div></div><div class="tile-label"><span class="name">Project Name</span><span class="year">2021</span></div></div>
-    <div class="work-tile"><div class="thumb"><div class="placeholder"><div class="ph-label">Naming</div><div class="ph-desc">Studio work — selected portfolio</div></div></div><div class="tile-label"><span class="name">Project Name</span><span class="year">2021</span></div></div>
-    <div class="work-tile"><div class="thumb"><div class="placeholder"><div class="ph-label">Strategy</div><div class="ph-desc">Studio work — selected portfolio</div></div></div><div class="tile-label"><span class="name">Project Name</span><span class="year">2020</span></div></div>
-    <div class="work-tile"><div class="thumb"><div class="placeholder"><div class="ph-label">Identity</div><div class="ph-desc">Studio work — selected portfolio</div></div></div><div class="tile-label"><span class="name">Project Name</span><span class="year">2019</span></div></div>
+    <div class="work-tile"><div class="thumb"><img src="/images/portfolio/packaging-work-beer-1.jpg" alt="WORK Beer packaging"></div><div class="tile-label"><span class="name">WORK Beer</span><span class="year">Packaging</span></div></div>
+    <div class="work-tile"><div class="thumb"><img src="/images/portfolio/packaging-verdiva.jpg" alt="Verdiva packaging"></div><div class="tile-label"><span class="name">Verdiva</span><span class="year">Identity</span></div></div>
+    <div class="work-tile"><div class="thumb"><img src="/images/portfolio/web-truth-reels.jpg" alt="Truth Reels digital brand work"></div><div class="tile-label"><span class="name">Truth Reels</span><span class="year">Digital</span></div></div>
+    <div class="work-tile"><div class="thumb"><img src="/images/portfolio/logos-va-tourism.jpg" alt="Virginia Tourism identity system"></div><div class="tile-label"><span class="name">Virginia Tourism</span><span class="year">Identity</span></div></div>
+    <div class="work-tile"><div class="thumb"><img src="/images/portfolio/collateral-richmond-rising-5.jpg" alt="Richmond Rising collateral"></div><div class="tile-label"><span class="name">Richmond Rising</span><span class="year">Collateral</span></div></div>
+    <div class="work-tile"><div class="thumb"><img src="/images/portfolio/stationery-big-thinkers.jpg" alt="Big Thinkers stationery"></div><div class="tile-label"><span class="name">Big Thinkers</span><span class="year">Brand System</span></div></div>
   </div>
 </section>
 
@@ -3585,18 +4319,36 @@ html { scroll-behavior: smooth; }
     <p>It should be simple enough to recognize, strong enough to endure, and flexible enough to live anywhere. The marks below were designed to hold their meaning over time — not just attention in the moment.</p>
   </div>
   <div class="work-logos-grid">
-    <div class="logo-tile">Logo 01</div>
-    <div class="logo-tile">Logo 02</div>
-    <div class="logo-tile">Logo 03</div>
-    <div class="logo-tile">Logo 04</div>
-    <div class="logo-tile">Logo 05</div>
-    <div class="logo-tile">Logo 06</div>
-    <div class="logo-tile">Logo 07</div>
-    <div class="logo-tile">Logo 08</div>
-    <div class="logo-tile">Logo 09</div>
-    <div class="logo-tile">Logo 10</div>
-    <div class="logo-tile">Logo 11</div>
-    <div class="logo-tile">Logo 12</div>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-bass.jpg" alt="Bass logo"></div><figcaption>Bass</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-brinton.jpg" alt="Brinton logo"></div><figcaption>Brinton</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-charles-luck.jpg" alt="Charles Luck logo"></div><figcaption>Charles Luck</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-cobble-stone.jpg" alt="Cobble Stone logo"></div><figcaption>Cobble Stone</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-daley-collaborations.jpg" alt="Daley Collaborations logo"></div><figcaption>Daley Collaborations</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-diehappy.jpg" alt="DieHappy logo"></div><figcaption>DieHappy</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-dun-bradstreet.jpg" alt="Dun &amp; Bradstreet logo"></div><figcaption>Dun &amp; Bradstreet</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-elephant-pharm.jpg" alt="Elephant Pharm logo"></div><figcaption>Elephant Pharm</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-fine-fettle-1.jpg" alt="Fine Fettle logo"></div><figcaption>Fine Fettle</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-hearing-first.jpg" alt="Hearing First logo"></div><figcaption>Hearing First</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-heron.jpg" alt="Heron logo"></div><figcaption>Heron</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-journeyman-1.jpg" alt="Journeyman logo"></div><figcaption>Journeyman</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-lot-44.jpg" alt="Lot 44 logo"></div><figcaption>Lot 44</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-meadewest.jpg" alt="MeadWestvaco logo"></div><figcaption>MeadWestvaco</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-omy-1.jpg" alt="O'My Dairy Free logo"></div><figcaption>O'My Dairy Free</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-ortho.jpg" alt="Advanced Ortho logo"></div><figcaption>Advanced Ortho</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-patriot-title.jpg" alt="Patriot Title logo"></div><figcaption>Patriot Title</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-peak-experience.jpg" alt="Peak Experience logo"></div><figcaption>Peak Experience</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-pivotal.jpg" alt="Pivotal logo"></div><figcaption>Pivotal</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-rhh.jpg" alt="RHB logo"></div><figcaption>RHB</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-richmond-ballet.jpg" alt="Richmond Ballet logo"></div><figcaption>Richmond Ballet</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-rockin-baby.jpg" alt="Rockin Baby logo"></div><figcaption>Rockin Baby</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-roja-1.jpg" alt="Roja Bloom logo"></div><figcaption>Roja Bloom</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-smartbox.jpg" alt="Smartbox logo"></div><figcaption>Smartbox</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-smile-pops.jpg" alt="Smile Pops logo"></div><figcaption>Smile Pops</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-spurrier.jpg" alt="Spurrier logo"></div><figcaption>Spurrier</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-truth-reels.jpg" alt="Truth Reels logo"></div><figcaption>Truth Reels</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-va-tobacco-settlement.jpg" alt="Virginia Tobacco Settlement logo"></div><figcaption>Virginia Tobacco Settlement</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-va-tourism.jpg" alt="Virginia Tourism logo"></div><figcaption>Virginia Tourism</figcaption></figure>
+    <figure class="logo-tile"><div class="logo-art"><img src="/images/portfolio/logos/logos-wickwire.jpg" alt="Wickwire logo"></div><figcaption>Wickwire</figcaption></figure>
   </div>
 </section>
 
@@ -3734,6 +4486,267 @@ html { scroll-behavior: smooth; }
   </div>
 </footer>
 
+<div class="platform-modal" id="platform-modal" aria-hidden="true">
+  <button class="platform-modal__backdrop" type="button" data-platform-close aria-label="Close platform dossier"></button>
+  <article class="platform-dossier" role="dialog" aria-modal="true" aria-labelledby="platform-title" aria-describedby="platform-thesis" tabindex="-1">
+    <button class="platform-dossier__close" type="button" data-platform-close aria-label="Close platform dossier">&times;</button>
+    <div class="platform-dossier__grid">
+      <div class="platform-dossier__visual">
+        <div class="platform-dossier__stamp">
+          <span>WORK Brand Foundry</span>
+          <span>CI²</span>
+        </div>
+        <div class="platform-dossier__mark">
+          <img id="platform-image" src="/images/brand-foundry-examples/save-the-world.jpeg" alt="">
+        </div>
+        <div class="platform-dossier__meta">
+          <span class="label" id="platform-category">Cause-commerce</span>
+          <h3 id="platform-visual-name">Save The World</h3>
+        </div>
+      </div>
+      <div class="platform-dossier__content">
+        <div class="platform-dossier__eyebrow">Platform Dossier · Launch Architecture</div>
+        <h2 id="platform-title"><span id="platform-headline-main">The cause economy,</span> <span class="italic" id="platform-headline-italic">made tangible.</span></h2>
+        <p class="platform-dossier__thesis" id="platform-thesis"></p>
+        <div class="platform-dossier__chips" id="platform-chips"></div>
+        <div class="platform-readiness" id="platform-readiness"></div>
+        <div class="platform-launch">
+          <h4>What is already built.</h4>
+          <ul id="platform-launch-list"></ul>
+        </div>
+        <div class="platform-dossier__footer">
+          <a class="btn primary" href="#page-contact" data-platform-close>Request the full brief</a>
+          <button class="btn" type="button" data-platform-close>Return to inventory</button>
+          <span class="platform-dossier__note">Conceived, named, designed, and framed for operator handoff.</span>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+
+<script>
+  (() => {
+    const animatedItems = document.querySelectorAll('.formula-kinetic, .triangle-figure, .ci-triangle');
+
+    if (!animatedItems.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      animatedItems.forEach((item) => item.classList.add('is-inview'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-inview');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -18% 0px', threshold: 0.28 });
+
+    animatedItems.forEach((item) => observer.observe(item));
+  })();
+
+  (() => {
+    const platformData = {
+      'save-the-world': {
+        name: 'Save The World',
+        category: 'Cause-commerce',
+        image: '/images/brand-foundry-examples/save-the-world.jpeg',
+        headlineMain: 'The cause economy,',
+        headlineItalic: 'made tangible.',
+        thesis: 'A cause-commerce platform built around a simple commercial truth: people will support what they can see, share, and carry into the world. Save The World gives an operator purpose-led clarity, merchandisable identity, and a flexible system for partnerships, campaigns, and licensed goods.',
+        chips: ['Purpose-led commerce', 'Licensing potential', 'Campaign-ready', 'Partnership-friendly'],
+        readiness: [
+          ['Strategic frame', 'Category thesis, audience logic, and proof-of-purpose architecture are already defined.'],
+          ['Brand system', 'Name, mark, tone, launch narrative, and campaign language work as one complete platform.'],
+          ['Operator handoff', 'Product pathways, partnership targets, and first-market activation are ready to brief.']
+        ],
+        launch: [
+          'Identity and lockup system',
+          'Founding story and manifesto',
+          'Cause partnership architecture',
+          'Merchandise and product directions',
+          'Campaign territories and launch lines',
+          'Qualified operator briefing package'
+        ]
+      },
+      'wine-hunters': {
+        name: 'Wine Hunters',
+        category: 'Experiential wine',
+        image: '/images/brand-foundry-examples/wine-hunters.jpeg',
+        headlineMain: 'Wine discovery,',
+        headlineItalic: 'with a field-guide soul.',
+        thesis: 'Wine Hunters turns the search for great bottles into an ownable adventure: part club, part content platform, part tasting engine. It is built for operators who want more than a wine label; they get a world with recurring membership, events, retail, and editorial range.',
+        chips: ['Club-ready', 'Experience-led', 'Content engine', 'Retail extensible'],
+        readiness: [
+          ['Strategic frame', 'A clear position in discovery, taste, access, and adventure gives the brand a defensible lane.'],
+          ['Brand system', 'The identity carries from bottles and vehicles to field notes, events, maps, and membership.'],
+          ['Operator handoff', 'Launch paths include wine club, guided trips, retail collaborations, and media programming.']
+        ],
+        launch: [
+          'Core identity and expedition language',
+          'Club and membership architecture',
+          'Event and tasting experience concepts',
+          'Editorial and field-guide content system',
+          'Retail and partnership extensions',
+          'First-season activation brief'
+        ]
+      },
+      'poshabilities': {
+        name: 'Poshabilities',
+        category: 'Retail platform',
+        image: '/images/brand-foundry-examples/poshabilities.jpeg',
+        headlineMain: 'Everyday polish,',
+        headlineItalic: 'built to become a business.',
+        thesis: 'Poshabilities is a modern retail and content platform for taste, social fluency, gifting, and small luxuries. The brand has room to move across products, advice, occasions, and partnerships without losing its central promise: making aspiration feel useful, charming, and attainable.',
+        chips: ['Giftable', 'Editorially rich', 'Product-flexible', 'Partnership-ready'],
+        readiness: [
+          ['Strategic frame', 'The platform owns a high-margin territory between taste, manners, gifting, and accessible luxury.'],
+          ['Brand system', 'Name, voice, identity, and product behavior are built to stretch without becoming generic.'],
+          ['Operator handoff', 'Assortment logic, launch collections, content pillars, and collaboration lanes are framed.']
+        ],
+        launch: [
+          'Brand voice and etiquette-forward point of view',
+          'Launch assortment territories',
+          'Gift, home, beauty, and social occasion pathways',
+          'Editorial content and advice pillars',
+          'Retail collaboration targets',
+          'Operator-ready commercialization brief'
+        ]
+      },
+      'family-inc': {
+        name: 'Family Inc.',
+        category: 'Family systems',
+        image: '/images/brand-foundry-examples/family-inc.jpeg',
+        headlineMain: 'The household,',
+        headlineItalic: 'reimagined as an operating system.',
+        thesis: 'Family Inc. turns the work of family life into a smart, teachable, and entertaining platform. It has the breadth to become content, curriculum, tools, products, workshops, and licensing because the central idea is instantly legible: families run better when everyone understands the business of being a family.',
+        chips: ['Curriculum-ready', 'Productizable', 'Media-friendly', 'Licensable'],
+        readiness: [
+          ['Strategic frame', 'A strong category idea connects parenting, education, household management, and life skills.'],
+          ['Brand system', 'The identity is playful enough for children and credible enough for parents, schools, and sponsors.'],
+          ['Operator handoff', 'Program modules, content arcs, product ideas, and partnership categories are mapped.']
+        ],
+        launch: [
+          'Core platform story and vocabulary',
+          'Learning module and workshop directions',
+          'Content series and book concepts',
+          'Product, game, and toolkit extensions',
+          'School, sponsor, and family brand partnerships',
+          'Launch roadmap for pilot programming'
+        ]
+      },
+      'queen-bee': {
+        name: 'Queen Bee',
+        category: 'Consumer IP',
+        image: '/images/brand-foundry-examples/queen-bee.jpeg',
+        headlineMain: 'Authority, wit,',
+        headlineItalic: 'and hive-minded commerce.',
+        thesis: 'Queen Bee is consumer IP with immediate symbolic power: leadership, taste, confidence, and community in one mark. The platform can move across beauty, food, home, publishing, membership, and gifting because the idea is simple, iconic, and commercially elastic.',
+        chips: ['Iconic mark', 'Category-flexible', 'Community-led', 'Premium potential'],
+        readiness: [
+          ['Strategic frame', 'The brand occupies a memorable territory around confidence, influence, taste, and collective momentum.'],
+          ['Brand system', 'Identity, language, and attitude are strong enough to anchor products, content, and membership.'],
+          ['Operator handoff', 'Commercial lanes, audience logic, and first-wave applications are ready for a focused launch.']
+        ],
+        launch: [
+          'Identity and symbol system',
+          'Voice, attitude, and brand story',
+          'Beauty, food, home, and gifting applications',
+          'Community and membership mechanics',
+          'Publishing and content extensions',
+          'Premium partnership and licensing brief'
+        ]
+      }
+    };
+
+    const modal = document.getElementById('platform-modal');
+    const dossier = modal?.querySelector('.platform-dossier');
+    const platformCards = document.querySelectorAll('.brand-tile[data-platform]');
+    const image = document.getElementById('platform-image');
+    const category = document.getElementById('platform-category');
+    const visualName = document.getElementById('platform-visual-name');
+    const headlineMain = document.getElementById('platform-headline-main');
+    const headlineItalic = document.getElementById('platform-headline-italic');
+    const thesis = document.getElementById('platform-thesis');
+    const chips = document.getElementById('platform-chips');
+    const readiness = document.getElementById('platform-readiness');
+    const launchList = document.getElementById('platform-launch-list');
+    let lastFocusedElement = null;
+
+    if (!modal || !dossier || !platformCards.length) return;
+
+    const renderList = (container, items, builder) => {
+      const fragment = document.createDocumentFragment();
+      items.forEach((item) => fragment.appendChild(builder(item)));
+      container.replaceChildren(fragment);
+    };
+
+    const openPlatform = (key, trigger) => {
+      const platform = platformData[key];
+      if (!platform) return;
+
+      lastFocusedElement = trigger;
+      image.src = platform.image;
+      image.alt = `${platform.name} logo`;
+      category.textContent = platform.category;
+      visualName.textContent = platform.name;
+      headlineMain.textContent = platform.headlineMain;
+      headlineItalic.textContent = platform.headlineItalic;
+      thesis.textContent = platform.thesis;
+
+      renderList(chips, platform.chips, (item) => {
+        const chip = document.createElement('span');
+        chip.textContent = item;
+        return chip;
+      });
+
+      renderList(readiness, platform.readiness, ([label, copy]) => {
+        const item = document.createElement('div');
+        item.className = 'platform-readiness__item';
+        const strong = document.createElement('strong');
+        strong.textContent = label;
+        const span = document.createElement('span');
+        span.textContent = copy;
+        item.append(strong, span);
+        return item;
+      });
+
+      renderList(launchList, platform.launch, (item) => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        return li;
+      });
+
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('platform-modal-open');
+      window.requestAnimationFrame(() => dossier.focus({ preventScroll: true }));
+    };
+
+    const closePlatform = ({ restoreFocus = true } = {}) => {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('platform-modal-open');
+      if (restoreFocus && lastFocusedElement) lastFocusedElement.focus({ preventScroll: true });
+    };
+
+    platformCards.forEach((card) => {
+      card.addEventListener('click', () => openPlatform(card.dataset.platform, card));
+    });
+
+    modal.addEventListener('click', (event) => {
+      const closeTarget = event.target.closest('[data-platform-close]');
+      if (!closeTarget) return;
+      closePlatform({ restoreFocus: closeTarget.tagName !== 'A' });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal.classList.contains('is-open')) closePlatform();
+    });
+  })();
+</script>
 
 </body>
 </html>

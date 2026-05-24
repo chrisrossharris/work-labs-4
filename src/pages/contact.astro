@@ -1,159 +1,67 @@
 ---
-import SiteFooter from '../components/SiteFooter.astro';
-import SiteHeader from '../components/SiteHeader.astro';
-import { contactPage, contactProfile } from '../data/site';
-import Layout from '../layouts/Layout.astro';
-
-const [pathsSection, contextSection] = contactPage.sections;
+import PageFrame from '../components/PageFrame.astro';
+import { contactPage, contactPaths, contactProfile } from '../data/site';
 ---
 
-<Layout title={contactPage.title} description={contactPage.metaDescription}>
-  <div class="site-shell">
-    <SiteHeader currentPath="/contact" ctaHref={contactPage.cta.href} ctaLabel="Email Cabell" />
+<PageFrame title={contactPage.title} description={contactPage.metaDescription} currentPath="/contact" ctaHref={contactProfile.mailto} ctaLabel="Email WORK LABS">
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow" data-reveal>Start a Conversation</div>
+      <h1 class="page-title" data-reveal>Time is everyone's<br /><span class="italic muted">most valuable asset.</span></h1>
+      <p class="hero__sub" data-reveal>The best conversations begin before the conversation begins. Choose the path that fits, send what you can, and the studio will respond personally.</p>
+    </div>
+  </section>
 
-    <main>
-      <section class="relative overflow-hidden border-b border-white/[0.08]">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(200,165,106,0.14),transparent_28%),radial-gradient(circle_at_80%_22%,rgba(255,255,255,0.05),transparent_24%)]"></div>
-        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brass/60 to-transparent"></div>
-        <div class="mx-auto grid max-w-7xl gap-10 px-6 py-18 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:px-10 lg:py-26">
-          <div class="relative z-10">
-            <div class="text-xs font-semibold uppercase tracking-[0.28em] text-brass">
-              {contactPage.heroEyebrow}
-            </div>
-            <h1 class="mt-6 max-w-[11ch] font-serif text-[3.2rem] leading-[0.96] text-paper sm:text-[3.8rem] lg:text-[4.2rem]">
-              {contactPage.heroTitle}
-            </h1>
-            <p class="mt-8 max-w-3xl text-lg leading-8 text-paper-dim sm:text-xl">
-              {contactPage.heroBody}
-            </p>
-            {contactPage.heroNote && (
-              <div class="mt-8 max-w-2xl border-l border-brass pl-5 text-sm uppercase tracking-[0.18em] text-paper-soft">
-                {contactPage.heroNote}
-              </div>
-            )}
-          </div>
-
-          <div class="relative z-10 rounded-[2rem] border border-white/[0.08] bg-white/[0.03] p-8">
-            <div class="text-xs font-semibold uppercase tracking-[0.22em] text-brass">Direct contact</div>
-            <div class="mt-5 font-serif text-3xl text-paper">{contactProfile.name}</div>
-            <div class="mt-2 text-sm uppercase tracking-[0.18em] text-paper-soft">{contactProfile.role}</div>
-            <div class="mt-8 space-y-3 text-base text-paper-dim">
-              <a href={contactProfile.mailto} class="block transition hover:text-brass">{contactProfile.email}</a>
-              <a href={contactProfile.phoneHref} class="block transition hover:text-brass">{contactProfile.phone}</a>
-            </div>
-            <div class="mt-8 rounded-[1.5rem] border border-white/[0.08] bg-black/20 p-5 text-sm leading-7 text-paper-dim">
-              The strongest inquiries are specific about the opportunity, the urgency, and what a
-              successful next step looks like.
-            </div>
-          </div>
+  <section class="section section--light">
+    <div class="container">
+      <div class="split split--end">
+        <div>
+          <div class="eyebrow" data-reveal>Four Paths In</div>
+          <h2 class="section-title" data-reveal>Different questions.<br /><span class="italic muted">Different doors.</span></h2>
         </div>
-      </section>
+        <p class="lede" data-reveal>Pick the closest fit. If the inquiry is thoughtful, it will get to the right place.</p>
+      </div>
+      <div class="feature-grid" style="margin-top:72px;">
+        {contactPaths.map((path) => (
+          <article class="contact-card" data-reveal>
+            <div class="contact-card__number">{path.number}</div>
+            <h3 class="card-title">{path.title}</h3>
+            <p>{path.body}</p>
+            <a class="arrow-link" href={contactProfile.mailto}>{path.label}</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 
-      <section class="border-b border-white/[0.08]">
-        <div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
-          <div class="max-w-4xl">
-            <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">{pathsSection.eyebrow}</div>
-            <h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">{pathsSection.title}</h2>
-          </div>
-          <div class="mt-12 grid gap-5 lg:grid-cols-3">
-            {'items' in pathsSection &&
-              pathsSection.items.map((item, index) => (
-                <article class="rounded-[1.8rem] border border-white/[0.08] bg-white/[0.03] p-8">
-                  <h3 class="font-serif text-3xl leading-tight text-paper">{item.title}</h3>
-                  <p class="mt-5 text-base leading-7 text-paper-dim">{item.body}</p>
-                  <form
-                    name={index === 0 ? 'foundry-inquiry' : index === 1 ? 'consulting-inquiry' : 'ci2-inquiry'}
-                    method="POST"
-                    data-netlify="true"
-                    netlify-honeypot="bot-field"
-                    class="mt-8 grid gap-4"
-                  >
-                    <input type="hidden" name="form-name" value={index === 0 ? 'foundry-inquiry' : index === 1 ? 'consulting-inquiry' : 'ci2-inquiry'} />
-                    <input type="hidden" name="bot-field" />
-                    <input type="hidden" name="inquiry_type" value={item.title} />
-                    <label class="grid gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-paper-soft">
-                      Name
-                      <input name="name" required class="rounded-xl border border-white/[0.08] bg-black/20 px-4 py-3 text-sm font-normal normal-case tracking-normal text-paper outline-none transition focus:border-brass" />
-                    </label>
-                    <label class="grid gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-paper-soft">
-                      Email
-                      <input type="email" name="email" required class="rounded-xl border border-white/[0.08] bg-black/20 px-4 py-3 text-sm font-normal normal-case tracking-normal text-paper outline-none transition focus:border-brass" />
-                    </label>
-                    <label class="grid gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-paper-soft">
-                      Why now
-                      <textarea name="why_now" rows="3" required class="rounded-xl border border-white/[0.08] bg-black/20 px-4 py-3 text-sm font-normal normal-case tracking-normal text-paper outline-none transition focus:border-brass"></textarea>
-                    </label>
-                    <button type="submit" class="rounded-full bg-brass px-5 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-ink transition hover:bg-sand">
-                      Request a call
-                    </button>
-                  </form>
-                </article>
-              ))}
-          </div>
-        </div>
-      </section>
+  <section class="section section--dark" style="text-align:center;">
+    <div class="container">
+      <div class="eyebrow" data-reveal>Direct</div>
+      <h2 class="section-title" data-reveal style="margin-inline:auto;"><a href={contactProfile.mailto}>{contactProfile.email}</a></h2>
+      <p class="lede" data-reveal style="margin:28px auto 0;">WORK LABS · Richmond, Virginia</p>
+    </div>
+  </section>
 
-      <section class="bg-sand text-ink">
-        <div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
-          <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div>
-              <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass-soft">{contextSection.eyebrow}</div>
-              <h2 class="mt-4 font-serif text-4xl leading-tight sm:text-5xl">{contextSection.title}</h2>
-              <p class="mt-6 max-w-xl text-lg leading-8 text-stone-700">
-                A useful inquiry saves time for everyone. The more clearly the context is framed,
-                the faster the conversation can become productive.
-              </p>
-            </div>
-            <div class="grid gap-4 md:grid-cols-2">
-              {'items' in contextSection &&
-                contextSection.items.map((item) => (
-                  <div class="rounded-[1.5rem] border border-black/[0.08] bg-white/[0.62] p-6 text-base leading-7 text-stone-700">
-                    {item}
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="relative overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(200,165,106,0.18),transparent_34%)]"></div>
-        <div class="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-28">
-          <div class="grid gap-5 lg:grid-cols-[1fr_1fr_1fr]">
-            <div class="rounded-[1.8rem] border border-white/[0.08] bg-white/[0.03] p-8">
-              <div class="text-xs font-semibold uppercase tracking-[0.22em] text-brass">Branding</div>
-              <p class="mt-4 text-base leading-7 text-paper-dim">
-                Identity, packaging, naming, repositioning, and the strategic questions that shape
-                how a company is seen.
-              </p>
-            </div>
-            <div class="rounded-[1.8rem] border border-white/[0.08] bg-white/[0.03] p-8">
-              <div class="text-xs font-semibold uppercase tracking-[0.22em] text-brass">Consulting</div>
-              <p class="mt-4 text-base leading-7 text-paper-dim">
-                Strategic sessions, exploratory work, frameworks, and longer advisory relationships
-                for businesses at inflection points.
-              </p>
-            </div>
-            <div class="rounded-[1.8rem] border border-white/[0.08] bg-white/[0.03] p-8">
-              <div class="text-xs font-semibold uppercase tracking-[0.22em] text-brass">Foundry / CI²</div>
-              <p class="mt-4 text-base leading-7 text-paper-dim">
-                Public hero brands, private inventory requests, commissioned opportunities, and
-                conversations related to Collaborative Intelligence.
-              </p>
-            </div>
-          </div>
-          <div class="mt-10 text-center">
-            <a
-              href={contactProfile.mailto}
-              class="inline-flex rounded-full bg-brass px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-ink transition hover:bg-sand"
-            >
-              Email Cabell Harris
-            </a>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <SiteFooter />
-  </div>
-</Layout>
+  <section class="section section--light">
+    <div class="container split">
+      <div>
+        <div class="eyebrow" data-reveal>Before We Speak</div>
+        <h2 class="section-title" data-reveal>A few questions worth thinking about.</h2>
+      </div>
+      <div class="cards-grid" style="grid-template-columns:1fr;">
+        {[
+          'What problem are you hoping to solve?',
+          'Why is it important now?',
+          'What have you already tried?',
+          'What do you believe is getting in the way?',
+          'If this were successful, what would be different?',
+        ].map((question, index) => (
+          <article class="card" data-reveal>
+            <div class="card__number">0{index + 1}</div>
+            <h3 class="card-title">{question}</h3>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</PageFrame>

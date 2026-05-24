@@ -1,0 +1,25 @@
+---
+import SiteFooter from './SiteFooter.astro';
+import SiteHeader from './SiteHeader.astro';
+import Layout from '../layouts/Layout.astro';
+
+interface Props {
+  ctaHref?: string;
+  ctaLabel?: string;
+  currentPath: string;
+  description: string;
+  title: string;
+}
+
+const { ctaHref = '/contact', ctaLabel = 'Start a Conversation', currentPath, description, title } = Astro.props;
+---
+
+<Layout title={title} description={description}>
+  <div class="site-shell">
+    <SiteHeader currentPath={currentPath} ctaHref={ctaHref} ctaLabel={ctaLabel} />
+    <main>
+      <slot />
+    </main>
+    <SiteFooter />
+  </div>
+</Layout>

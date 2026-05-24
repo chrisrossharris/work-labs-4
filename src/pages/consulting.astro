@@ -1,166 +1,101 @@
 ---
-import SiteFooter from '../components/SiteFooter.astro';
-import SiteHeader from '../components/SiteHeader.astro';
-import { consultingPage } from '../data/site';
-import Layout from '../layouts/Layout.astro';
-
-const [introSection, advantagesSection, formatsSection, audienceSection, needsSection] =
-  consultingPage.sections;
+import PageFrame from '../components/PageFrame.astro';
+import { consultingPage, consultingTiers } from '../data/site';
 ---
 
-<Layout title={consultingPage.title} description={consultingPage.metaDescription}>
-  <div class="site-shell">
-    <SiteHeader currentPath="/consulting" ctaHref="/contact" ctaLabel={consultingPage.cta.label} />
+<PageFrame title={consultingPage.title} description={consultingPage.metaDescription} currentPath="/consulting" ctaHref="/contact" ctaLabel="Request a Session">
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow" data-reveal>Consulting</div>
+      <h1 class="page-title" data-reveal>Decisions,<br /><span class="italic muted">not just deliverables.</span></h1>
+      <p class="hero__sub" data-reveal>Applied Collaborative Intelligence for organizations navigating positioning, growth, launches, succession, or brand and business decisions where sequencing matters.</p>
+      <div class="hero__actions" data-reveal>
+        <a class="btn btn--primary" href="/contact">Begin with a WORK Session</a>
+      </div>
+    </div>
+  </section>
 
-    <main>
-      <section class="relative overflow-hidden border-b border-white/[0.08]">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(200,165,106,0.16),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.05),transparent_26%)]"></div>
-        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brass/60 to-transparent"></div>
-        <div class="mx-auto grid max-w-7xl gap-10 px-6 py-18 lg:grid-cols-[1fr_0.9fr] lg:items-start lg:px-10 lg:py-26">
-          <div class="relative z-10">
-            <div class="text-xs font-semibold uppercase tracking-[0.28em] text-brass">
-              {consultingPage.heroEyebrow}
-            </div>
-            <h1 class="mt-6 max-w-[11ch] font-serif text-[3.2rem] leading-[0.96] text-paper sm:text-[3.8rem] lg:text-[4.3rem]">
-              {consultingPage.heroTitle}
-            </h1>
-            <p class="mt-8 max-w-3xl text-lg leading-8 text-paper-dim sm:text-xl">
-              {consultingPage.heroBody}
-            </p>
-            {consultingPage.heroNote && (
-              <div class="mt-8 max-w-2xl border-l border-brass pl-5 text-sm uppercase tracking-[0.18em] text-paper-soft">
-                {consultingPage.heroNote}
-              </div>
-            )}
-            <div class="mt-10 flex flex-wrap gap-4">
-              <a
-                href={consultingPage.cta.href}
-                class="rounded-full bg-brass px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-ink transition hover:bg-sand"
-              >
-                {consultingPage.cta.label}
-              </a>
-              <a
-                href="#engagement-formats"
-                class="rounded-full border border-white/[0.12] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-paper transition hover:border-brass hover:text-brass"
-              >
-                View engagement formats
-              </a>
-            </div>
-          </div>
+  <section class="section section--light">
+    <div class="container split">
+      <div>
+        <div class="eyebrow" data-reveal>The Approach</div>
+        <h2 class="section-title" data-reveal>This is strategic partnership built to create movement.</h2>
+      </div>
+      <div>
+        <p class="lede" data-reveal>Some clients need a single conversation that changes the direction of a decision. Others need a longer relationship that helps leadership navigate growth, repositioning, launches, internal complexity, or the gap between what the company is and how it is showing up.</p>
+        <p class="lede" data-reveal>WORK LABS is structured for both: focused enough to be useful immediately, rigorous enough to stay valuable over time.</p>
+      </div>
+    </div>
+  </section>
 
-          <div class="relative z-10 grid gap-5">
-            <div class="rounded-[2rem] border border-white/[0.08] bg-white/[0.03] p-7">
-              <div class="text-xs font-semibold uppercase tracking-[0.22em] text-brass">What consulting means here</div>
-              <h2 class="mt-4 font-serif text-3xl leading-tight text-paper">{introSection.title}</h2>
-              <p class="mt-5 text-base leading-7 text-paper-dim">{'body' in introSection ? introSection.body : ''}</p>
+  <section class="section section--light">
+    <div class="container">
+      <div class="eyebrow" data-reveal>Ways to Engage</div>
+      <h2 class="section-title" data-reveal>Four practical formats.</h2>
+      <div class="cards-grid cards-grid--two" style="margin-top:70px;">
+        {consultingTiers.map((tier) => (
+          <article class="tier-card" data-reveal>
+            <div class="tier-card__number">{tier.number}</div>
+            <h3 class="card-title">{tier.title}</h3>
+            <p class="italic brass" style="margin-top:8px;">{tier.subtitle}</p>
+            <p>{tier.body}</p>
+            <div class="dossier-chips">
+              <span>{tier.duration}</span>
+              <span>{tier.investment}</span>
             </div>
-            <div class="grid gap-4 md:grid-cols-3">
-              <div class="rounded-[1.6rem] border border-white/[0.08] bg-black/20 p-5">
-                <div class="text-xs font-semibold uppercase tracking-[0.2em] text-brass">Positioning</div>
-                <p class="mt-3 text-sm leading-7 text-paper-dim">For brands, businesses, and leadership teams at inflection points.</p>
-              </div>
-              <div class="rounded-[1.6rem] border border-white/[0.08] bg-black/20 p-5">
-                <div class="text-xs font-semibold uppercase tracking-[0.2em] text-brass">Decision quality</div>
-                <p class="mt-3 text-sm leading-7 text-paper-dim">Built to improve clarity, sequence, and conviction, not just output volume.</p>
-              </div>
-              <div class="rounded-[1.6rem] border border-white/[0.08] bg-black/20 p-5">
-                <div class="text-xs font-semibold uppercase tracking-[0.2em] text-brass">Operating philosophy</div>
-                <p class="mt-3 text-sm leading-7 text-paper-dim">(AI²) + (HI²) = (CI²) applied where brand and business decisions meet.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 
-      <section class="border-b border-white/[0.08]">
-        <div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
-          <div class="max-w-4xl">
-            <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">{advantagesSection.eyebrow}</div>
-            <h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">{advantagesSection.title}</h2>
-          </div>
-          <div class="mt-12 grid gap-5 lg:grid-cols-3">
-            {'items' in advantagesSection &&
-              advantagesSection.items.map((item) => (
-                <article class="rounded-[1.75rem] border border-white/[0.08] bg-white/[0.03] p-7">
-                  <h3 class="font-serif text-2xl text-paper">{item.title}</h3>
-                  <p class="mt-4 text-base leading-7 text-paper-dim">{item.body}</p>
-                </article>
-              ))}
-          </div>
-        </div>
-      </section>
+  <section class="section section--dark">
+    <div class="container">
+      <div class="eyebrow" data-reveal>The Instruments</div>
+      <h2 class="section-title" data-reveal>Frameworks that run through every engagement.</h2>
+      <div class="cards-grid" style="margin-top:70px;">
+        {[
+          ['Collaborative Intelligence™', 'The Operating System', 'Artificial and human intelligence used intentionally, with clear roles for speed, judgment, direction, and meaning.'],
+          ['Trivergent Thinking™', 'The Decision Filter', 'Consequential moves are evaluated across time, cost, and impact at the same time.'],
+          ['WORK Brand Intelligence™', 'The Diagnostic System', 'A structured way to evaluate brand health, trajectory, culture, communication, and commercial readiness.'],
+        ].map(([label, title, body]) => (
+          <article class="card" data-reveal>
+            <p class="italic brass">{label}</p>
+            <h3 class="card-title">{title}</h3>
+            <p>{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 
-      <section id="engagement-formats" class="bg-sand text-ink">
-        <div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
-          <div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
-            <div>
-              <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass-soft">{formatsSection.eyebrow}</div>
-              <h2 class="mt-4 font-serif text-4xl leading-tight sm:text-5xl">{formatsSection.title}</h2>
-            </div>
-            <p class="max-w-3xl text-lg leading-8 text-stone-700">
-              Engagements are shaped around the level of clarity, depth, and continuity a client
-              needs. Some decisions need a single high-value intervention. Others require an ongoing
-              strategic relationship.
-            </p>
-          </div>
-          <div class="mt-12 grid gap-5 md:grid-cols-2">
-            {'items' in formatsSection &&
-              formatsSection.items.map((item) => (
-                <article class="rounded-[1.8rem] border border-black/[0.08] bg-white/[0.62] p-8">
-                  <h3 class="font-serif text-3xl leading-tight text-stone-900">{item.title}</h3>
-                  <p class="mt-5 text-base leading-7 text-stone-700">{item.body}</p>
-                </article>
-              ))}
-          </div>
-        </div>
-      </section>
+  <section class="section section--light">
+    <div class="container">
+      <div class="eyebrow" data-reveal>Who This Is For</div>
+      <h2 class="section-title" data-reveal>Organizations at real inflection points.</h2>
+      <div class="cards-grid" style="margin-top:70px;">
+        {[
+          ['Founder-led growth companies', 'Outgrown improvisation. Need clarity, not just activity.'],
+          ['Capital-backed and PE portfolio companies', 'Accountable for value creation. Mis-sequencing is expensive.'],
+          ['Mid-market and legacy organizations', 'In transition, restructuring, or repositioning.'],
+        ].map(([title, body]) => (
+          <article class="card" data-reveal>
+            <h3 class="card-title">{title}</h3>
+            <p>{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 
-      <section class="border-b border-white/[0.08] bg-white/[0.02]">
-        <div class="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
-          <div class="grid gap-6 lg:grid-cols-3">
-            <div class="lg:col-span-1">
-              <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">{audienceSection.eyebrow}</div>
-              <h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">{audienceSection.title}</h2>
-            </div>
-            <div class="grid gap-4 lg:col-span-2 md:grid-cols-3">
-              {'items' in audienceSection &&
-                audienceSection.items.map((item) => (
-                  <div class="rounded-[1.5rem] border border-white/[0.08] bg-black/20 p-6 text-base leading-7 text-paper-dim">
-                    {item}
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="relative overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(200,165,106,0.18),transparent_34%)]"></div>
-        <div class="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-28">
-          <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div>
-              <div class="text-xs font-semibold uppercase tracking-[0.26em] text-brass">{needsSection.eyebrow}</div>
-              <h2 class="mt-4 font-serif text-4xl leading-tight text-paper sm:text-5xl">{needsSection.title}</h2>
-              <a
-                href="/contact"
-                class="mt-8 inline-flex rounded-full bg-brass px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-ink transition hover:bg-sand"
-              >
-                Request a consulting call
-              </a>
-            </div>
-            <div class="grid gap-4 md:grid-cols-2">
-              {'items' in needsSection &&
-                needsSection.items.map((item) => (
-                  <div class="rounded-[1.5rem] border border-white/[0.08] bg-white/[0.03] p-6 text-base leading-7 text-paper-dim">
-                    {item}
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <SiteFooter />
-  </div>
-</Layout>
+  <section class="section section--dark" style="text-align:center;">
+    <div class="container">
+      <div class="eyebrow" data-reveal>What's Next</div>
+      <h2 class="section-title" data-reveal style="margin-inline:auto;">Most engagements begin with a Session.</h2>
+      <p class="lede" data-reveal style="margin:28px auto 0;">Defined scope, defined investment, defined outcome. From there, the right next step usually becomes obvious.</p>
+      <div class="hero__actions" data-reveal style="justify-content:center;">
+        <a class="btn btn--primary" href="/contact">Request a Session</a>
+      </div>
+    </div>
+  </section>
+</PageFrame>
