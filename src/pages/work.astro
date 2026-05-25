@@ -1,37 +1,70 @@
 ---
 import PageFrame from '../components/PageFrame.astro';
-import { logoArchive, portfolioPage, portfolioStudies } from '../data/site';
+import { legacyPortfolioCategories, legacyPortfolioCategoryWork, legacyPortfolioProjects } from '../data/legacyPortfolio';
+import { portfolioPage, portfolioStudies } from '../data/site';
 
-const portfolioItems = [
-  ...portfolioStudies.map((study) => ({
-    brand: study.brand,
-    categoryLabel: study.medium,
-    categories: [...study.categories],
-    image: study.image,
-    isLogo: false,
-    summary: study.summary,
-    title: study.title,
-  })),
-  ...logoArchive.map(([brand, image]) => ({
-    brand,
-    categoryLabel: 'Logo / Identity',
-    categories: ['Logo Design', 'Identity'],
-    image,
-    isLogo: true,
-    summary:
-      'A focused identity mark selected from the WORK LABS archive for its clarity, memorability, and ability to carry a brand idea quickly.',
-    title: brand,
-  })),
+const legacyCategoryImages = new Set(legacyPortfolioCategoryWork.flatMap((item) => item.imageSet));
+
+const featuredItems = portfolioStudies.map((study) => ({
+  brand: study.brand,
+  categoryLabel: study.medium,
+  categories: ['Featured', ...study.categories],
+  image: study.image,
+  imageSet: [study.image],
+  isLogo: false,
+  projectNumber: '',
+  source: 'Featured Work',
+  sourceHref: '',
+  summary: study.summary,
+  title: study.title,
+}));
+
+const legacyGalleryItems = legacyPortfolioCategoryWork.map((item) => ({
+  ...item,
+  isLogo: item.categories.includes('Logo Design'),
+}));
+
+const legacyBrandItems = legacyPortfolioProjects
+  .filter((item) => !item.image || !legacyCategoryImages.has(item.image))
+  .map((item) => ({
+    ...item,
+    isLogo: item.categories.includes('Logo Design'),
+  }));
+
+const portfolioItems = [...featuredItems, ...legacyGalleryItems, ...legacyBrandItems].filter((item, index, items) => {
+  const key = item.image ? `image:${item.image}` : `brand:${item.brand}:${item.categoryLabel}`;
+  return items.findIndex((candidate) => {
+    const candidateKey = candidate.image ? `image:${candidate.image}` : `brand:${candidate.brand}:${candidate.categoryLabel}`;
+    return candidateKey === key;
+  }) === index;
+});
+
+const preferredCategoryOrder = [
+  'All Work',
+  'Featured',
+  ...legacyPortfolioCategories.map((category) => category.title),
+  'Campaign',
+  'Brand Systems',
+  'Archive',
 ];
 
+const availableCategories = Array.from(new Set(portfolioItems.flatMap((item) => item.categories)));
 const categoryFilters = [
-  'All Work',
-  ...Array.from(new Set(portfolioItems.flatMap((item) => item.categories))).sort((a, b) => a.localeCompare(b)),
+  ...preferredCategoryOrder.filter((category) => category === 'All Work' || availableCategories.includes(category)),
+  ...availableCategories
+    .filter((category) => !preferredCategoryOrder.includes(category))
+    .sort((a, b) => a.localeCompare(b)),
 ];
 
 const brandFilters = [
   'All Brands',
   ...Array.from(new Set(portfolioItems.map((item) => item.brand))).sort((a, b) => a.localeCompare(b)),
+];
+
+const archiveMetrics = [
+  [`${portfolioItems.length}`, 'portfolio cards'],
+  [`${legacyPortfolioProjects.length}`, 'brand/project records imported'],
+  [`${legacyPortfolioCategories.length}`, 'legacy category views represented'],
 ];
 
 const viewingPractice = [
@@ -56,6 +89,7 @@ const viewingPractice = [
     title: 'End with market effect',
   },
 ];
+
 ---
 
 <PageFrame title="Work | WORK LABS" description={portfolioPage.metaDescription} currentPath="/work" ctaHref="/contact" ctaLabel="Discuss a Project">
@@ -63,7 +97,15 @@ const viewingPractice = [
     <div class="container">
       <div class="eyebrow" data-reveal>The Portfolio</div>
       <h1 class="page-title" data-reveal>The work has always been<br /><span class="italic muted">the argument.</span></h1>
-      <p class="hero__sub" data-reveal>Selected work from across categories and mediums. Curated as evidence of taste, strategic clarity, and the ability to make ideas visible in the real world.</p>
+      <p class="hero__sub" data-reveal>The full archive from the previous portfolio has been brought into this page: category galleries, brand/project records, logo work, and selected featured pieces, all organized for faster review.</p>
+      <div class="archive-metrics" data-reveal>
+        {archiveMetrics.map(([value, label]) => (
+          <div>
+            <strong>{value}</strong>
+            <span>{label}</span>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -95,7 +137,7 @@ const viewingPractice = [
           <div class="eyebrow" data-reveal>Portfolio Browser</div>
           <h2 class="section-title" data-reveal>View the work by category<br /><span class="italic muted">or by brand.</span></h2>
         </div>
-        <p class="lede" data-reveal>A single archive across identity, packaging, digital, collateral, campaigns, and logo design. Use categories to evaluate capability, and brands to evaluate consistency of thought.</p>
+        <p class="lede" data-reveal>A single archive across the old category views and brand index. Use categories to evaluate capability, and brands to evaluate consistency of thought. Cards with multiple images open into a focused viewer.</p>
       </div>
 
       <div class="portfolio-controls" data-reveal>
@@ -131,16 +173,26 @@ const viewingPractice = [
             data-portfolio-item
             data-brand={item.brand}
             data-categories={item.categories.join('|')}
+            data-images={JSON.stringify(item.imageSet)}
+            data-meta={item.categoryLabel}
+            data-summary={item.summary}
+            data-title={item.brand}
             data-reveal
           >
-            <div class="work-tile__image">
-              <img src={item.image} alt={`${item.brand} ${item.categoryLabel}`} loading="lazy" />
-            </div>
+            <button class="work-tile__image work-tile__image-button" type="button" data-portfolio-open aria-label={`View ${item.brand}`}>
+              {item.image ? (
+                <img src={item.image} alt={`${item.brand} ${item.categoryLabel}`} loading="lazy" />
+              ) : (
+                <span class="work-tile__placeholder">{item.brand}</span>
+              )}
+              {item.imageSet.length > 1 && <span class="work-tile__count">{item.imageSet.length} images</span>}
+            </button>
             <div class="work-tile__content">
               <div class="work-tile__meta">
                 <strong>{item.brand}</strong>
                 <span>{item.categoryLabel}</span>
               </div>
+              {item.projectNumber && <div class="work-tile__project">{item.projectNumber}</div>}
               <p class="work-tile__summary">{item.summary}</p>
               <div class="work-tile__tags" aria-label={`${item.brand} categories`}>
                 {item.categories.map((category) => <span>{category}</span>)}
@@ -164,6 +216,23 @@ const viewingPractice = [
   </section>
 </PageFrame>
 
+<div class="portfolio-modal" data-portfolio-modal aria-hidden="true" role="dialog" aria-modal="true" aria-label="Portfolio image viewer">
+  <button class="portfolio-modal__backdrop" type="button" data-portfolio-modal-close aria-label="Close portfolio viewer"></button>
+  <div class="portfolio-modal__panel">
+    <button class="portfolio-modal__close" type="button" data-portfolio-modal-close aria-label="Close">x</button>
+    <button class="portfolio-modal__nav portfolio-modal__nav--prev" type="button" data-portfolio-modal-prev aria-label="Previous image">&lt;</button>
+    <figure class="portfolio-modal__figure">
+      <img src="" alt="" data-portfolio-modal-image />
+      <figcaption>
+        <strong data-portfolio-modal-title></strong>
+        <span data-portfolio-modal-meta></span>
+        <p data-portfolio-modal-summary></p>
+      </figcaption>
+    </figure>
+    <button class="portfolio-modal__nav portfolio-modal__nav--next" type="button" data-portfolio-modal-next aria-label="Next image">&gt;</button>
+  </div>
+</div>
+
 <script is:inline>
   (() => {
     const root = document.querySelector('[data-portfolio-browser]');
@@ -174,7 +243,18 @@ const viewingPractice = [
     const items = Array.from(root.querySelectorAll('[data-portfolio-item]'));
     const status = root.querySelector('[data-portfolio-status]');
     const empty = root.querySelector('[data-portfolio-empty]');
+    const modal = document.querySelector('[data-portfolio-modal]');
+    const modalImage = modal?.querySelector('[data-portfolio-modal-image]');
+    const modalTitle = modal?.querySelector('[data-portfolio-modal-title]');
+    const modalMeta = modal?.querySelector('[data-portfolio-modal-meta]');
+    const modalSummary = modal?.querySelector('[data-portfolio-modal-summary]');
+    const modalPrev = modal?.querySelector('[data-portfolio-modal-prev]');
+    const modalNext = modal?.querySelector('[data-portfolio-modal-next]');
+    const modalClose = Array.from(document.querySelectorAll('[data-portfolio-modal-close]'));
     let activeCategory = 'All Work';
+    let activeImages = [];
+    let activeImageIndex = 0;
+    let activeModalCopy = { meta: '', summary: '', title: '' };
 
     const updatePortfolio = () => {
       const activeBrand = brandFilter?.value || 'All Brands';
@@ -214,5 +294,83 @@ const viewingPractice = [
 
     brandFilter?.addEventListener('change', updatePortfolio);
     updatePortfolio();
+
+    const renderModalImage = () => {
+      if (!modal || !modalImage || activeImages.length === 0) return;
+
+      modalImage.src = activeImages[activeImageIndex];
+      modalImage.alt = `${activeModalCopy.title} portfolio image ${activeImageIndex + 1}`;
+
+      if (modalTitle) modalTitle.textContent = activeModalCopy.title;
+      if (modalMeta) modalMeta.textContent = `${activeModalCopy.meta} / ${activeImageIndex + 1} of ${activeImages.length}`;
+      if (modalSummary) modalSummary.textContent = activeModalCopy.summary;
+
+      const hasMultiple = activeImages.length > 1;
+      if (modalPrev) modalPrev.hidden = !hasMultiple;
+      if (modalNext) modalNext.hidden = !hasMultiple;
+    };
+
+    const openModal = (item) => {
+      if (!modal) return;
+
+      try {
+        activeImages = JSON.parse(item.dataset.images || '[]').filter(Boolean);
+      } catch {
+        activeImages = [];
+      }
+
+      if (activeImages.length === 0) return;
+
+      activeImageIndex = 0;
+      activeModalCopy = {
+        meta: item.dataset.meta || '',
+        summary: item.dataset.summary || '',
+        title: item.dataset.title || '',
+      };
+
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('portfolio-modal-open');
+      renderModalImage();
+    };
+
+    const closeModal = () => {
+      if (!modal) return;
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('portfolio-modal-open');
+    };
+
+    root.querySelectorAll('[data-portfolio-open]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const item = button.closest('[data-portfolio-item]');
+        if (item) openModal(item);
+      });
+    });
+
+    modalPrev?.addEventListener('click', () => {
+      activeImageIndex = (activeImageIndex - 1 + activeImages.length) % activeImages.length;
+      renderModalImage();
+    });
+
+    modalNext?.addEventListener('click', () => {
+      activeImageIndex = (activeImageIndex + 1) % activeImages.length;
+      renderModalImage();
+    });
+
+    modalClose.forEach((button) => button.addEventListener('click', closeModal));
+
+    document.addEventListener('keydown', (event) => {
+      if (!modal?.classList.contains('is-open')) return;
+      if (event.key === 'Escape') closeModal();
+      if (event.key === 'ArrowLeft' && activeImages.length > 1) {
+        activeImageIndex = (activeImageIndex - 1 + activeImages.length) % activeImages.length;
+        renderModalImage();
+      }
+      if (event.key === 'ArrowRight' && activeImages.length > 1) {
+        activeImageIndex = (activeImageIndex + 1) % activeImages.length;
+        renderModalImage();
+      }
+    });
   })();
 </script>
