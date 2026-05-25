@@ -77,6 +77,8 @@ export const contactProfile = {
   phone: '(804) 363-1719',
   phoneHref: 'tel:+18043631719',
   role: 'Founder & Chief Brand Architect',
+  scheduleHref:
+    'mailto:hello@worklabs.com?subject=Schedule%20a%20WORK%20LABS%20call&body=I%27d%20like%20to%20schedule%20a%20WORK%20LABS%20call.%0A%0AName%3A%0ACompany%3A%0AWhat%20you%27re%20working%20on%3A%0ATiming%3A%0ABest%20times%20to%20talk%3A',
   signoff: 'Always Thinking',
 };
 

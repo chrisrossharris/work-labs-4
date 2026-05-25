@@ -1,14 +1,76 @@
 ---
 import PageFrame from '../components/PageFrame.astro';
 import { contactPage, contactPaths, contactProfile } from '../data/site';
+
+const pathHref = (label) => {
+  const subject = encodeURIComponent(label);
+  const body = encodeURIComponent(
+    "I'd like to start with " +
+      label +
+      '.\n\nName:\nCompany:\nWhat prompted this:\nTiming:\nBest times to talk:',
+  );
+
+  return 'mailto:' + contactProfile.email + '?subject=' + subject + '&body=' + body;
+};
+
+const callSteps = [
+  {
+    body: 'Use the schedule call button. It opens an email with the useful context already framed.',
+    number: '01',
+    title: 'Send the request',
+  },
+  {
+    body: 'WORK LABS will respond directly with times, fit, and the right next step.',
+    number: '02',
+    title: 'Get a personal reply',
+  },
+  {
+    body: 'The first conversation is for clarity: what matters, why now, and whether this is the right relationship.',
+    number: '03',
+    title: 'Use the call well',
+  },
+];
+
+const callPrep = [
+  'What decision, opportunity, or constraint is creating urgency?',
+  'What kind of help do you think you need: brand, consulting, Foundry access, or CI²?',
+  'What would make the first call useful enough to justify the time?',
+];
 ---
 
-<PageFrame title={contactPage.title} description={contactPage.metaDescription} currentPath="/contact" ctaHref={contactProfile.mailto} ctaLabel="Email WORK LABS">
+<PageFrame title={contactPage.title} description={contactPage.metaDescription} currentPath="/contact" ctaHref={contactProfile.scheduleHref} ctaLabel="Schedule a Call">
   <section class="hero">
-    <div class="container">
-      <div class="eyebrow" data-reveal>Start a Conversation</div>
-      <h1 class="page-title" data-reveal>Time is everyone's<br /><span class="italic muted">most valuable asset.</span></h1>
-      <p class="hero__sub" data-reveal>The best conversations begin before the conversation begins. Choose the path that fits, send what you can, and the studio will respond personally.</p>
+    <div class="container contact-hero">
+      <div>
+        <div class="eyebrow" data-reveal>Schedule a Call</div>
+        <h1 class="page-title" data-reveal>Time is everyone's<br /><span class="italic muted">most valuable asset.</span></h1>
+        <p class="hero__sub" data-reveal>The fastest path is simple: request a focused call, include enough context to make the time useful, and WORK LABS will respond personally.</p>
+        <div class="hero__actions" data-reveal>
+          <a class="btn btn--primary" href={contactProfile.scheduleHref}>Schedule a Call</a>
+          <a class="btn" href={contactProfile.mailto}>Email Directly</a>
+        </div>
+      </div>
+
+      <aside class="schedule-card" data-reveal>
+        <div class="schedule-card__label">Best First Step</div>
+        <h2>Request a focused 30-minute call.</h2>
+        <p>Use it to clarify fit, timing, and the right kind of engagement before anyone overbuilds a brief.</p>
+        <ul class="schedule-list">
+          <li>
+            <strong>Good for</strong>
+            <span>Brand, consulting, Foundry, CI², portfolio or archive questions</span>
+          </li>
+          <li>
+            <strong>Response</strong>
+            <span>Personal reply with next available times</span>
+          </li>
+          <li>
+            <strong>Direct</strong>
+            <span><a href={contactProfile.phoneHref}>{contactProfile.phone}</a></span>
+          </li>
+        </ul>
+        <a class="btn btn--primary" href={contactProfile.scheduleHref}>Schedule a Call</a>
+      </aside>
     </div>
   </section>
 
@@ -16,29 +78,35 @@ import { contactPage, contactPaths, contactProfile } from '../data/site';
     <div class="container">
       <div class="split split--end">
         <div>
-          <div class="eyebrow" data-reveal>Four Paths In</div>
-          <h2 class="section-title" data-reveal>Different questions.<br /><span class="italic muted">Different doors.</span></h2>
+          <div class="eyebrow" data-reveal>Route the Conversation</div>
+          <h2 class="section-title" data-reveal>Choose the closest starting point.</h2>
         </div>
-        <p class="lede" data-reveal>Pick the closest fit. If the inquiry is thoughtful, it will get to the right place.</p>
+        <p class="lede" data-reveal>These are not forms to complete. They are useful labels that help the first reply get sharper faster.</p>
       </div>
       <div class="feature-grid" style="margin-top:72px;">
-        {contactPaths.map((path) => (
+        {contactPaths.map((pathItem) => (
           <article class="contact-card" data-reveal>
-            <div class="contact-card__number">{path.number}</div>
-            <h3 class="card-title">{path.title}</h3>
-            <p>{path.body}</p>
-            <a class="arrow-link" href={contactProfile.mailto}>{path.label}</a>
+            <div class="contact-card__number">{pathItem.number}</div>
+            <h3 class="card-title">{pathItem['title']}</h3>
+            <p>{pathItem.body}</p>
+            <a class="arrow-link" href={pathHref(pathItem.label)}>{pathItem.label}</a>
           </article>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section section--dark" style="text-align:center;">
+  <section class="section section--dark section--compact">
     <div class="container">
-      <div class="eyebrow" data-reveal>Direct</div>
-      <h2 class="section-title" data-reveal style="margin-inline:auto;"><a href={contactProfile.mailto}>{contactProfile.email}</a></h2>
-      <p class="lede" data-reveal style="margin:28px auto 0;">WORK LABS · Richmond, Virginia</p>
+      <div class="contact-steps">
+        {callSteps.map((step) => (
+          <article data-reveal>
+            <span>{step.number}</span>
+            <h3>{step['title']}</h3>
+            <p>{step.body}</p>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -46,21 +114,22 @@ import { contactPage, contactPaths, contactProfile } from '../data/site';
     <div class="container split">
       <div>
         <div class="eyebrow" data-reveal>Before We Speak</div>
-        <h2 class="section-title" data-reveal>A few questions worth thinking about.</h2>
+        <h2 class="section-title" data-reveal>Make the first call useful.</h2>
+        <p class="lede" data-reveal style="margin-top:28px;">You do not need a polished brief. You do need enough signal to make the conversation productive.</p>
       </div>
       <div class="cards-grid" style="grid-template-columns:1fr;">
-        {[
-          'What problem are you hoping to solve?',
-          'Why is it important now?',
-          'What have you already tried?',
-          'What do you believe is getting in the way?',
-          'If this were successful, what would be different?',
-        ].map((question, index) => (
+        {callPrep.map((question, index) => (
           <article class="card" data-reveal>
             <div class="card__number">0{index + 1}</div>
             <h3 class="card-title">{question}</h3>
           </article>
         ))}
+        <article class="card contact-direct-card" data-reveal>
+          <div class="card__number">Direct</div>
+          <h3 class="card-title"><a href={contactProfile.mailto}>{contactProfile.email}</a></h3>
+          <p>WORK LABS · Richmond, Virginia</p>
+          <a class="arrow-link" href={contactProfile.scheduleHref}>Schedule a Call</a>
+        </article>
       </div>
     </div>
   </section>

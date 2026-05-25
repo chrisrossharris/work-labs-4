@@ -435,6 +435,121 @@ img {
   text-transform: uppercase;
 }
 
+.contact-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+  gap: 80px;
+  align-items: end;
+}
+
+.schedule-card {
+  border: 1px solid rgba(198, 163, 90, 0.44);
+  background: var(--black-2);
+  padding: 34px;
+  box-shadow: 0 28px 80px rgba(0,0,0,0.24);
+}
+
+.schedule-card__label {
+  color: var(--brass);
+  font-size: 10px;
+  font-weight: var(--sans-semibold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.schedule-card h2 {
+  margin: 28px 0 0;
+  color: var(--text-light);
+  font-size: clamp(30px, 3vw, 44px);
+  font-weight: var(--sans-semibold);
+  line-height: 0.98;
+}
+
+.schedule-card p {
+  margin: 22px 0 0;
+  color: var(--text-light-dim);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.schedule-list {
+  display: grid;
+  gap: 0;
+  margin: 32px 0;
+  border-top: 1px solid var(--line-dark);
+  padding: 0;
+  list-style: none;
+}
+
+.schedule-list li {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 18px;
+  border-bottom: 1px solid var(--line-dark);
+  padding: 16px 0;
+}
+
+.schedule-list strong {
+  color: var(--brass);
+  font-size: 10px;
+  font-weight: var(--sans-semibold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.schedule-list span {
+  color: var(--text-light-dim);
+  font-size: 14px;
+  line-height: 1.42;
+}
+
+.contact-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid var(--line-dark);
+  background: var(--line-dark);
+}
+
+.contact-steps article {
+  min-height: 240px;
+  background: var(--black-2);
+  padding: 30px;
+}
+
+.contact-steps span {
+  color: var(--brass);
+  font-family: var(--serif);
+  font-size: 44px;
+  font-style: italic;
+  line-height: 1;
+}
+
+.contact-steps h3 {
+  margin: 44px 0 0;
+  color: var(--text-light);
+  font-size: 18px;
+  font-weight: var(--sans-semibold);
+  letter-spacing: 0;
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+
+.contact-steps p {
+  margin: 18px 0 0;
+  color: var(--text-light-dim);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.contact-direct-card .card__number {
+  font-size: 34px;
+}
+
+.contact-direct-card .arrow-link {
+  margin-top: 24px;
+}
+
 .formula {
   font-family: var(--serif);
   font-style: italic;
@@ -1532,6 +1647,8 @@ img {
   .site-nav { display: none; }
   .site-nav-mobile { display: flex; }
   .split { grid-template-columns: 1fr; gap: 54px; }
+  .contact-hero { grid-template-columns: 1fr; gap: 54px; }
+  .contact-steps { grid-template-columns: 1fr; }
   .feature-grid,
   .cards-grid,
   .cards-grid--two,
@@ -1567,6 +1684,9 @@ img {
   .hero__meta { margin-bottom: 34px; }
   .hero__sub { margin-top: 34px; }
   .archive-metrics { grid-template-columns: 1fr; }
+  .schedule-card { padding: 26px; }
+  .schedule-list li { grid-template-columns: 1fr; gap: 8px; }
+  .contact-steps article { min-height: 210px; }
   .feature-grid,
   .cards-grid,
   .cards-grid--two,
